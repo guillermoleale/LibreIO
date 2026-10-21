@@ -39,3 +39,20 @@ Todo el núcleo trabaja con `Fraction` sobre `BigInt`. Los decimales de la entra
 - Los ejemplos se leen de `examples/` en tiempo de build con `import.meta.glob`, así hay una sola copia en el repo.
 - El gráfico es SVG propio. Las rectas se pintan con una lista fija de ocho colores con buen contraste en ambos temas.
 - Los tests de interfaz corren con Playwright sobre la versión web compilada con el base path de GitHub Pages.
+
+## Paramétrico
+
+- Lado derecho: desde el tableau óptimo, `x_B(p) = x_B + (p - b0) · B^-1 e_i`; cuando una básica llega a cero se pivotea con el simplex dual (entra la columna con menor `|d_j / a_rj|` entre las negativas de la fila que sale). Si ninguna columna sirve, el problema es infactible más allá del quiebre.
+- Coeficiente: si la variable es básica, los costos reducidos de las no básicas cambian con `θ · a_rk`; cuando uno llega a cero entra esa columna con el simplex primal. Si es no básica, entra cuando su costo reducido llega a cero. Si no hay razón mínima, el problema es ilimitado más allá del quiebre.
+- Las dos exploraciones parten de la misma base, así que el tramo que contiene el valor actual se une en uno solo.
+
+## Ramificación y acotamiento
+
+- Cada nodo resuelve la relajación con las cotas acumuladas de su camino; las cotas se traducen a filas `SUB` y `SLB` de la forma estándar, así el alumno las ve en el tableau del nodo.
+- Se guarda el `LPResult` completo de cada nodo para mostrar su tableau final en la pestaña Árbol.
+
+## Transporte y asignación
+
+- Las celdas básicas forman un árbol generador del grafo bipartito filas-columnas. Los potenciales se obtienen recorriéndolo desde `u_1 = 0`; el ciclo de una celda no básica es el camino en el árbol entre su fila y su columna más la celda.
+- La sensibilidad de un costo básico se deduce de los ciclos de las celdas no básicas que pasan por él: con signo menos limita el aumento, con signo más la disminución.
+- El húngaro calcula la cobertura mínima con König sobre el emparejamiento máximo de ceros, lo que garantiza que la cantidad de líneas sea la mínima en cada paso.

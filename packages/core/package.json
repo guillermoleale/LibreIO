@@ -1,6 +1,6 @@
 {
   "name": "@libreio/core",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "description": "Núcleo de LibreIO: aritmética exacta, parser y algoritmos de Investigación Operativa",
   "license": "GPL-3.0-or-later",

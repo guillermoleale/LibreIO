@@ -22,6 +22,14 @@ Programación lineal, que reemplaza a GLP y LINDO:
 - Método gráfico para dos variables con región factible, vértices exactos, recta de Z desplazable, zoom, arrastre del lado derecho de una restricción y exportación a SVG y PNG
 - Aritmética exacta con fracciones y vista decimal opcional
 
+## Qué agrega la versión 1.1
+
+- Análisis paramétrico del lado derecho de una fila o del coeficiente de una variable, con tramos, quiebres, gráfico de Z y formato clásico de LINDO PARA
+- Programación entera por ramificación y acotamiento con el árbol completo navegable, grilla de puntos enteros en el gráfico y reporte clásico con `NEW INTEGER SOLUTION` y `ENUMERATION COMPLETE`
+- Transporte con esquina noroeste, mínimo de matriz, de fila y de columna, Vogel y Russell, MODI iteración por iteración con el ciclo resaltado, balanceo automático, rutas prohibidas y rangos de costos
+- Transbordo reducido a transporte con buffer y asignación por el método húngaro con cada reducción y cobertura
+- Entrada tabular estilo WinQSB sincronizada con el texto y archivos `.io.json` para los módulos no lineales
+
 ## Modelos
 
 Los modelos se escriben en el formato de LINDO clásico, así que las guías de ejercicios existentes sirven tal cual:
