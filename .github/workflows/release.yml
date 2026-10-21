@@ -1,0 +1,83 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Construye los instaladores de escritorio en las tres plataformas y los publica en GitHub Releases
+# al crear un tag vX.Y.Z. Con workflow_dispatch solo construye, sin publicar.
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+jobs:
+  desktop:
+    name: Escritorio ${{ matrix.name }}
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: macOS arm64
+            platform: macos-latest
+            args: "--target aarch64-apple-darwin"
+          - name: macOS x64
+            platform: macos-latest
+            args: "--target x86_64-apple-darwin"
+          - name: Linux x64
+            platform: ubuntu-22.04
+            args: ""
+          - name: Windows x64
+            platform: windows-latest
+            args: ""
+    runs-on: ${{ matrix.platform }}
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+      - name: Instalar Rust estable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+      - name: Cache de Rust
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: apps/ui/src-tauri
+      - name: Dependencias de Linux
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+      - name: Instalar dependencias
+        run: pnpm install --frozen-lockfile
+      - name: Build y publicación con Tauri
+        uses: tauri-apps/tauri-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          projectPath: apps/ui
+          tagName: ${{ github.ref_type == 'tag' && github.ref_name || '' }}
+          releaseName: "LibreIO ${{ github.ref_name }}"
+          releaseBody: |
+            Instaladores de LibreIO para Windows, macOS y Linux y versión web en https://guillermoleale.com/LibreIO/
+
+            - Windows 10 o superior: `LibreIO_*_x64-setup.exe` (instalador NSIS), `LibreIO_*_x64_en-US.msi` o `LibreIO_*_portable_x64.exe` (sin instalación)
+            - macOS 12 o superior: `LibreIO_*_aarch64.dmg` para Apple Silicon y `LibreIO_*_x64.dmg` para Intel
+            - Ubuntu 22.04 o superior: `LibreIO_*_amd64.deb` o `LibreIO_*_amd64.AppImage`
+
+            Los instaladores no están firmados. En Windows, SmartScreen muestra un aviso: elegir "Más información" y "Ejecutar de todas formas". En macOS, Gatekeeper bloquea la primera apertura: clic derecho sobre la app, "Abrir" y confirmar, o en Privacidad y seguridad elegir "Abrir de todas formas".
+          releaseDraft: false
+          prerelease: false
+          args: ${{ matrix.args }}
+      - name: Publicar ejecutable portable de Windows
+        if: matrix.platform == 'windows-latest' && github.ref_type == 'tag'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          $version = "${{ github.ref_name }}".TrimStart("v")
+          Copy-Item apps/ui/src-tauri/target/release/libreio.exe "LibreIO_${version}_portable_x64.exe"
+          gh release upload "${{ github.ref_name }}" "LibreIO_${version}_portable_x64.exe" --clobber
