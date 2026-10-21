@@ -3,7 +3,6 @@ import type { StringKey } from "../i18n";
 
 export type ModuleKey =
   | "lp"
-  | "ilp"
   | "transport"
   | "network"
   | "pert"
@@ -23,7 +22,6 @@ export interface ModuleEntry {
 
 export const modules: readonly ModuleEntry[] = [
   { key: "lp", label: "module.lp", available: true },
-  { key: "ilp", label: "module.ilp", available: false },
   { key: "transport", label: "module.transport", available: true },
   { key: "network", label: "module.network", available: true },
   { key: "pert", label: "module.pert", available: true },
