@@ -2,7 +2,7 @@
 import { defineConfig } from "@playwright/test";
 
 // Los tests de interfaz corren contra la versión web compilada con el base path de GitHub Pages.
-const baseURL = "http://localhost:4173/libreio/";
+const baseURL = "http://localhost:4173/LibreIO/";
 
 export default defineConfig({
   testDir: "./e2e",
