@@ -62,16 +62,28 @@ jobs:
           tagName: ${{ github.ref_type == 'tag' && github.ref_name || '' }}
           releaseName: "LibreIO ${{ github.ref_name }}"
           releaseBody: |
-            Instaladores de LibreIO para Windows, macOS y Linux y versión web en https://guillermoleale.com/LibreIO/
+            Instaladores de LibreIO para Windows, macOS y Linux. La versión web, sin instalar nada, está en https://guillermoleale.com/LibreIO/
 
-            - Windows 10 o superior: `LibreIO_*_x64-setup.exe` (instalador NSIS), `LibreIO_*_x64_en-US.msi` o `LibreIO_*_portable_x64.exe` (sin instalación)
-            - macOS 12 o superior: `LibreIO_*_aarch64.dmg` para Apple Silicon y `LibreIO_*_x64.dmg` para Intel
-            - Ubuntu 22.04 o superior: `LibreIO_*_amd64.deb` o `LibreIO_*_amd64.AppImage`
+            Los instaladores no están firmados con certificado de Microsoft ni de Apple, así que el sistema muestra un aviso la primera vez. Es un paso único y no significa que la app esté rota.
 
-            Los instaladores no están firmados. En Windows, SmartScreen muestra un aviso: elegir "Más información" y "Ejecutar de todas formas". En macOS, Gatekeeper bloquea la primera apertura: clic derecho sobre la app, "Abrir" y confirmar, o en Privacidad y seguridad elegir "Abrir de todas formas".
+            **Windows 10 o superior.** `LibreIO_*_x64-setup.exe` (instalador), `LibreIO_*_x64_en-US.msi` o `LibreIO_*_portable_x64.exe` (corre sin instalar). Si SmartScreen muestra "Windows protegió tu PC", elegir "Más información" y "Ejecutar de todas formas".
+
+            **macOS 12 o superior.** `LibreIO_*_aarch64.dmg` para Mac con chip Apple y `LibreIO_*_x64.dmg` para Mac con Intel. Arrastrar LibreIO a Aplicaciones. Al abrirla por primera vez aparece un aviso de que Apple no puede verificar la app: cerrarlo, abrir Ajustes del Sistema, Privacidad y seguridad, bajar hasta el mensaje sobre LibreIO y elegir "Abrir de todas formas". Si el aviso dice que LibreIO "está dañado", ejecutar en Terminal `xattr -cr /Applications/LibreIO.app` y abrirla de nuevo.
+
+            **Ubuntu 22.04 o superior.** `LibreIO_*_amd64.deb` (`sudo apt install ./LibreIO_*_amd64.deb`) o `LibreIO_*_amd64.AppImage` (darle permiso de ejecución y ejecutarlo).
+
+            Instrucciones completas en https://github.com/guillermoleale/LibreIO#instalar
           releaseDraft: false
           prerelease: false
           args: ${{ matrix.args }}
+      - name: Verificar la firma ad hoc del bundle de macOS
+        if: startsWith(matrix.platform, 'macos')
+        run: |
+          APP=$(find apps/ui/src-tauri/target -maxdepth 6 -type d -name "LibreIO.app" | head -1)
+          test -n "$APP" || { echo "no se encontró LibreIO.app"; exit 1; }
+          codesign -dv --verbose=2 "$APP" 2>&1 | tee /tmp/codesign.txt
+          grep -q "Signature=adhoc" /tmp/codesign.txt || { echo "el bundle no quedó firmado ad hoc"; exit 1; }
+          codesign --verify --deep --strict --verbose=2 "$APP"
       - name: Publicar ejecutable portable de Windows
         if: matrix.platform == 'windows-latest' && github.ref_type == 'tag'
         shell: pwsh
