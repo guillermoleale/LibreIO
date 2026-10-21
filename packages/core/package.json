@@ -1,0 +1,24 @@
+{
+  "name": "@libreio/core",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Núcleo de LibreIO: aritmética exacta, parser y algoritmos de Investigación Operativa",
+  "license": "GPL-3.0-or-later",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run --coverage",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "5.0.5",
+    "highs": "1.15.4",
+    "typescript": "6.0.3",
+    "vitest": "5.0.5"
+  }
+}

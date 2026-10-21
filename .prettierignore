@@ -1,0 +1,10 @@
+node_modules/
+dist/
+coverage/
+pnpm-lock.yaml
+apps/ui/src-tauri/target/
+apps/ui/src-tauri/gen/
+apps/ui/playwright-report/
+apps/ui/test-results/
+*.lp
+LICENSE
