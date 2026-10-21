@@ -42,6 +42,8 @@ export interface GraphicalAnalysis {
   readonly unboundedDirection: [Fraction, Fraction] | null;
   readonly zRange: { readonly min: Fraction; readonly max: Fraction } | null;
   readonly viewBox: { readonly xMax: number; readonly yMax: number };
+  /** Puntos enteros de la región cuando las dos variables son enteras. */
+  readonly integerPoints: Point[];
 }
 
 function satisfies(line: GraphLine, p: Point): boolean {
@@ -153,6 +155,7 @@ export function graphicalAnalysis(model: LPModel): GraphicalAnalysis {
     unboundedDirection: null,
     zRange: null,
     viewBox: { xMax: 10, yMax: 10 },
+    integerPoints: [],
   };
   if (model.variables.length !== 2) {
     return empty;
@@ -295,8 +298,13 @@ export function graphicalAnalysis(model: LPModel): GraphicalAnalysis {
     };
   }
 
+  const integerPoints = model.variables.every((v) => v.kind !== "continuous")
+    ? integerGrid(all, vertices, bounded, xMax, yMax)
+    : [];
+
   return {
     applicable: true,
+    integerPoints,
     variables: [names[0]!, names[1]!],
     sense: model.sense,
     objective,
@@ -313,4 +321,41 @@ export function graphicalAnalysis(model: LPModel): GraphicalAnalysis {
     zRange,
     viewBox: { xMax, yMax },
   };
+}
+
+/** Puntos de coordenadas enteras que cumplen todas las restricciones, dentro de la región o de la vista. */
+function integerGrid(
+  lines: GraphLine[],
+  vertices: Vertex[],
+  bounded: boolean,
+  xMax: number,
+  yMax: number,
+): Point[] {
+  if (vertices.length === 0) {
+    return [];
+  }
+  const xs = vertices.map((v) => v.x);
+  const ys = vertices.map((v) => v.y);
+  const minX = xs.reduce((a, b) => (b.lt(a) ? b : a)).ceil();
+  const minY = ys.reduce((a, b) => (b.lt(a) ? b : a)).ceil();
+  const maxX = (
+    bounded ? xs.reduce((a, b) => (b.gt(a) ? b : a)) : Fraction.fromNumber(xMax)
+  ).floor();
+  const maxY = (
+    bounded ? ys.reduce((a, b) => (b.gt(a) ? b : a)) : Fraction.fromNumber(yMax)
+  ).floor();
+  const points: Point[] = [];
+  const limit = 5000;
+  for (let x = minX; x.le(maxX); x = x.add(Fraction.ONE)) {
+    for (let y = minY; y.le(maxY); y = y.add(Fraction.ONE)) {
+      const p = { x, y };
+      if (lines.every((l) => satisfies(l, p))) {
+        points.push(p);
+        if (points.length >= limit) {
+          return points;
+        }
+      }
+    }
+  }
+  return points;
 }

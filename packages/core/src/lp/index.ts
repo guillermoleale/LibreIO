@@ -52,3 +52,10 @@ export {
   type Point,
   type Vertex,
 } from "./graphical";
+export {
+  parametricCost,
+  parametricRhs,
+  type ParametricBreakpoint,
+  type ParametricResult,
+  type ParametricSegment,
+} from "./parametric";
