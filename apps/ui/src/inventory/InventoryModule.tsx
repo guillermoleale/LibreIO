@@ -19,6 +19,7 @@ import {
   type NewsvendorResult,
 } from "@libreio/core";
 import { t } from "../i18n";
+import { ReportBox } from "../common/ReportBox";
 import { inventoryExamples } from "../common/examples";
 import { downloadText } from "../common/download";
 import { openTextFile } from "../common/files";
@@ -902,9 +903,11 @@ export function InventoryModule() {
                 >
                   {status}
                 </p>
-                <pre className="report" data-testid="inventory-report">
-                  {report}
-                </pre>
+                <ReportBox
+                  text={report}
+                  baseName="inventario"
+                  testId="inventory-report"
+                />
               </div>
             )}
             {tab === "level" && solved.model === "eoq" && (

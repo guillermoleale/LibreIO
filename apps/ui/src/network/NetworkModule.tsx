@@ -22,6 +22,7 @@ import {
   type TspResult,
 } from "@libreio/core";
 import { t } from "../i18n";
+import { ReportBox } from "../common/ReportBox";
 import { networkExamples } from "../common/examples";
 import { downloadText } from "../common/download";
 import { openTextFile } from "../common/files";
@@ -723,9 +724,11 @@ export function NetworkModule() {
                 >
                   {status}
                 </p>
-                <pre className="report" data-testid="network-report">
-                  {report}
-                </pre>
+                <ReportBox
+                  text={report}
+                  baseName="red"
+                  testId="network-report"
+                />
               </div>
             )}
             {tab === "graph" && (

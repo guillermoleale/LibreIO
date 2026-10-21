@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { About } from "./common/About";
 import type { ViewKey } from "./common/modules";
 import { Sidebar } from "./common/Sidebar";
@@ -18,6 +18,28 @@ import { TransportModule } from "./transport/TransportModule";
 export function App() {
   const [view, setView] = useState<ViewKey>("lp");
   const [theme, toggleTheme] = useTheme();
+
+  // Ctrl+Enter resuelve en cualquier módulo: busca el botón principal de resolver del módulo activo.
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (
+        event.key !== "Enter" ||
+        !(event.ctrlKey || event.metaKey) ||
+        event.defaultPrevented
+      ) {
+        return;
+      }
+      const button = document.querySelector<HTMLButtonElement>(
+        '[data-testid$="-solve"], [data-testid="solve-button"]',
+      );
+      if (button && !button.disabled) {
+        event.preventDefault();
+        button.click();
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
 
   return (
     <div className="app">

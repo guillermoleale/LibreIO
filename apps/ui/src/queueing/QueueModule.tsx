@@ -19,6 +19,7 @@ import {
   type QueueResult,
 } from "@libreio/core";
 import { t } from "../i18n";
+import { ReportBox } from "../common/ReportBox";
 import { queueingExamples } from "../common/examples";
 import { downloadText } from "../common/download";
 import { openTextFile } from "../common/files";
@@ -552,9 +553,11 @@ export function QueueModule() {
                     </table>
                   </div>
                 )}
-                <pre className="report" data-testid="queue-report">
-                  {report}
-                </pre>
+                <ReportBox
+                  text={report}
+                  baseName="colas"
+                  testId="queue-report"
+                />
               </div>
             )}
             {tab === "pn" && (

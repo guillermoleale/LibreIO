@@ -19,6 +19,7 @@ import {
   type ProjectProblem,
 } from "@libreio/core";
 import { t } from "../i18n";
+import { ReportBox } from "../common/ReportBox";
 import { projectExamples } from "../common/examples";
 import { downloadText } from "../common/download";
 import { openTextFile } from "../common/files";
@@ -613,9 +614,11 @@ export function PertModule() {
                     .map((p) => p.join(" -> "))
                     .join("; ")}
                 </p>
-                <pre className="report" data-testid="pert-report">
-                  {report}
-                </pre>
+                <ReportBox
+                  text={report}
+                  baseName="proyecto"
+                  testId="pert-report"
+                />
               </div>
             )}
             {tab === "times" && (

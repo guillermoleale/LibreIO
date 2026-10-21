@@ -10,6 +10,7 @@ import {
   type ParametricResult,
 } from "@libreio/core";
 import { t } from "../i18n";
+import { ReportBox } from "../common/ReportBox";
 import {
   DECIMALS,
   makeFormatter,
@@ -361,9 +362,11 @@ export function ParametricTab({ solved, numberFormat }: ParametricTabProps) {
               {t("param.classic")}
             </label>
           </div>
-          <pre className="report" data-testid="param-report">
-            {report}
-          </pre>
+          <ReportBox
+            text={report}
+            baseName="parametrico"
+            testId="param-report"
+          />
         </>
       )}
     </div>

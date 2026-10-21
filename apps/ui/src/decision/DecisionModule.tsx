@@ -23,6 +23,7 @@ import {
   type TreeResult,
 } from "@libreio/core";
 import { t } from "../i18n";
+import { ReportBox } from "../common/ReportBox";
 import { decisionExamples } from "../common/examples";
 import { downloadText } from "../common/download";
 import { openTextFile } from "../common/files";
@@ -1363,9 +1364,11 @@ export function DecisionModule() {
                 >
                   {status}
                 </p>
-                <pre className="report" data-testid="decision-report">
-                  {report}
-                </pre>
+                <ReportBox
+                  text={report}
+                  baseName="decisiones"
+                  testId="decision-report"
+                />
               </div>
             )}
             {activeTab === "criteria" && solved.kind === "payoff" && (

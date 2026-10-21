@@ -18,6 +18,7 @@ import {
   type TransshipmentResult,
 } from "@libreio/core";
 import { t } from "../i18n";
+import { ReportBox } from "../common/ReportBox";
 import { transportExamples } from "../common/examples";
 import { downloadText } from "../common/download";
 import { openTextFile } from "../common/files";
@@ -426,26 +427,11 @@ export function TransportModule() {
                     <li key={i}>{m}</li>
                   ))}
                 </ul>
-                <div className="report-header">
-                  <h3>{t("tab.solution")}</h3>
-                  <button
-                    type="button"
-                    className="secondary"
-                    onClick={() =>
-                      void downloadText(
-                        report,
-                        fileName.replace(/\.io\.json$/, "") + ".txt",
-                        "txt",
-                        "Texto",
-                      )
-                    }
-                  >
-                    {t("solution.exportTxt")}
-                  </button>
-                </div>
-                <pre className="report" data-testid="transport-report">
-                  {report}
-                </pre>
+                <ReportBox
+                  text={report}
+                  baseName="transporte"
+                  testId="transport-report"
+                />
               </div>
             )}
             {activeTab === "iterations" && transportResult && (

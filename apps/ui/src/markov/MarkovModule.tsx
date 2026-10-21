@@ -14,6 +14,7 @@ import {
   type MarkovResult,
 } from "@libreio/core";
 import { t } from "../i18n";
+import { ReportBox } from "../common/ReportBox";
 import { markovExamples } from "../common/examples";
 import { downloadText } from "../common/download";
 import { openTextFile } from "../common/files";
@@ -551,9 +552,11 @@ export function MarkovModule() {
                     ? ` · período ${solved.result.period}`
                     : ""}
                 </p>
-                <pre className="report" data-testid="markov-report">
-                  {report}
-                </pre>
+                <ReportBox
+                  text={report}
+                  baseName="markov"
+                  testId="markov-report"
+                />
               </div>
             )}
             {tab === "distribution" && (

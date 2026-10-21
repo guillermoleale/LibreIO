@@ -17,6 +17,7 @@ import {
   type StagecoachResult,
 } from "@libreio/core";
 import { t } from "../i18n";
+import { ReportBox } from "../common/ReportBox";
 import { dpExamples } from "../common/examples";
 import { downloadText } from "../common/download";
 import { openTextFile } from "../common/files";
@@ -800,9 +801,11 @@ export function DpModule() {
                 >
                   {status}
                 </p>
-                <pre className="report" data-testid="dp-report">
-                  {report}
-                </pre>
+                <ReportBox
+                  text={report}
+                  baseName="programacion-dinamica"
+                  testId="dp-report"
+                />
               </div>
             )}
             {tab === "tables" && solved.kind === "knapsack" && (
