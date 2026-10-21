@@ -72,17 +72,22 @@ describe("LP-11. Pivoteo manual", () => {
   });
 
   it("rechaza una variable con costo reducido que no mejora sin modificar el tableau", () => {
-    const snapshot = JSON.stringify(t0, (_, v: unknown) =>
+    // Después de que entra X, SLK 4 queda no básica con costo reducido 3: entrar no mejora Z
+    const first = manualPivot(t0, "X");
+    expect(first.ok).toBe(true);
+    const t1 = first.ok ? first.next : t0;
+    const snapshot = JSON.stringify(t1, (_, v: unknown) =>
       typeof v === "bigint" ? v.toString() : v,
     );
-    const outcome = manualPivot(t0, "SLK 2");
+    const outcome = manualPivot(t1, "SLK 4");
     expect(outcome.ok).toBe(false);
     if (!outcome.ok) {
-      expect(outcome.error).toMatch(/SLK 2/);
+      expect(outcome.error).toMatch(/SLK 4/);
       expect(outcome.error).toMatch(/no mejora/i);
+      expect(outcome.error).toContain("3");
     }
     expect(
-      JSON.stringify(t0, (_, v: unknown) =>
+      JSON.stringify(t1, (_, v: unknown) =>
         typeof v === "bigint" ? v.toString() : v,
       ),
     ).toBe(snapshot);
@@ -90,6 +95,9 @@ describe("LP-11. Pivoteo manual", () => {
     expect(unknown.ok).toBe(false);
     const basic = manualPivot(t0, "SLK 4");
     expect(basic.ok).toBe(false);
+    if (!basic.ok) {
+      expect(basic.error).toMatch(/básica/);
+    }
   });
 
   it("en el tableau óptimo ninguna variable mejora", () => {

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { t } from "../i18n";
-import { appVersion, dependencies, repositoryUrl } from "./about";
+import { appVersion, dependencies, repositoryUrl } from "./thirdParty";
 
 export function About() {
   return (

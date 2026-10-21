@@ -95,7 +95,11 @@ describe("LP-08. Verificación cruzada contra highs", () => {
     for (let k = 0; k < 200; k += 1) {
       const model = randomModel(rng);
       const ours = solveLP(model);
-      const theirs = highs.solve(toCplexLp(model), { output_flag: false });
+      // Sin presolve: con presolve HiGHS informa "Infeasible" en algunos problemas ilimitados
+      const theirs = highs.solve(toCplexLp(model), {
+        output_flag: false,
+        presolve: "off",
+      });
       const label = `problema ${k}`;
       if (theirs.Status === "Optimal") {
         expect(ours.status, label).toBe("optimal");
