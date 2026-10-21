@@ -9,10 +9,21 @@ interface StatusBannerProps {
 }
 
 export function StatusBanner({ solved, number }: StatusBannerProps) {
-  const { result, integer } = solved;
-  let kind = result.status;
+  const { result, integer, gomory } = solved;
+  let kind: string = result.status;
   let text: string;
-  if (integer) {
+  if (gomory) {
+    kind = gomory.status === "limit" ? "infeasible" : gomory.status;
+    if (gomory.status === "optimal") {
+      text = `${t("status.gomoryOptimal")}. Z = ${number(gomory.solution!.objective)} (${gomory.cuts.length} ${t("cuts.count")}, ${t("status.relaxation").toLowerCase()} Z = ${number(result.solution!.objective)})`;
+    } else if (gomory.status === "unbounded") {
+      text = `${t("status.unbounded")} (${t("status.relaxation").toLowerCase()})`;
+    } else if (gomory.status === "limit") {
+      text = `${t("status.gomoryLimit")} (${gomory.cuts.length} ${t("cuts.count")})`;
+    } else {
+      text = `${t("status.infeasible")} (${gomory.cuts.length} ${t("cuts.count")})`;
+    }
+  } else if (integer) {
     kind = integer.status;
     if (integer.status === "optimal") {
       text = `${t("status.integerOptimal")}. Z = ${number(integer.solution!.objective)} (${integer.nodes.length} ${t("tree.node").toLowerCase()}s, ${t("status.relaxation").toLowerCase()} Z = ${number(result.solution!.objective)})`;

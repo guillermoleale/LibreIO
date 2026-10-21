@@ -5,11 +5,13 @@ import {
   ParseError,
   branchAndBound,
   formatLP,
+  gomoryCuts,
   graphicalAnalysis,
   parseLP,
   solveLP,
   type BBResult,
   type EnteringRule,
+  type GomoryResult,
   type GraphicalAnalysis,
   type LPModel,
   type LPResult,
@@ -20,6 +22,7 @@ import { lpExamples } from "../common/examples";
 import { openTextFile, saveTextFile } from "../common/files";
 import type { NumberFormat } from "../common/numberFormat";
 import { Tabs } from "../common/Tabs";
+import { CutsTab } from "./CutsTab";
 import { GraphTab } from "./GraphTab";
 import { ModelEditor } from "./ModelEditor";
 import { ModelTab } from "./ModelTab";
@@ -37,7 +40,8 @@ type TabKey =
   | "graph"
   | "sensitivity"
   | "parametric"
-  | "tree";
+  | "tree"
+  | "cuts";
 
 interface ParseOutcome {
   readonly model: LPModel | null;
@@ -50,8 +54,13 @@ export interface Solved {
   /** Resultado del simplex: el problema continuo o la relajación lineal si hay variables enteras. */
   readonly result: LPResult;
   readonly graphical: GraphicalAnalysis;
+  /** Ramificación y acotamiento, cuando hay variables enteras y ese es el método elegido. */
   readonly integer: BBResult | null;
+  /** Cortes de Gomory, cuando hay variables enteras y ese es el método elegido. */
+  readonly gomory: GomoryResult | null;
 }
+
+type IntegerMethod = "branchAndBound" | "gomory";
 
 function tryParse(text: string): ParseOutcome {
   if (text.trim() === "") {
@@ -81,6 +90,8 @@ export function LPModule() {
   const [method, setMethod] = useState<SimplexMethod>("twoPhase");
   const [rule, setRule] = useState<EnteringRule>("dantzig");
   const [branchVariable, setBranchVariable] = useState("auto");
+  const [integerMethod, setIntegerMethod] =
+    useState<IntegerMethod>("branchAndBound");
   const [numberFormat, setNumberFormat] = useState<NumberFormat>("fraction");
   const [reportFormat, setReportFormat] = useState<ReportFormat>("combined");
   const [solved, setSolved] = useState<Solved | null>(null);
@@ -100,25 +111,30 @@ export function LPModule() {
       const result = solveLP(model, { method, rule });
       const graphical = graphicalAnalysis(model);
       let integer: BBResult | null = null;
+      let gomory: GomoryResult | null = null;
       if (hasIntegers(model)) {
-        const preferred = model.variables.findIndex(
-          (v) => v.name === branchVariable,
-        );
-        integer = branchAndBound(model, {
-          method,
-          rule,
-          ...(preferred >= 0
-            ? {
-                chooseBranch: (candidates: number[]) =>
-                  candidates.includes(preferred) ? preferred : candidates[0]!,
-              }
-            : {}),
-        });
+        if (integerMethod === "gomory") {
+          gomory = gomoryCuts(model, { method, rule });
+        } else {
+          const preferred = model.variables.findIndex(
+            (v) => v.name === branchVariable,
+          );
+          integer = branchAndBound(model, {
+            method,
+            rule,
+            ...(preferred >= 0
+              ? {
+                  chooseBranch: (candidates: number[]) =>
+                    candidates.includes(preferred) ? preferred : candidates[0]!,
+                }
+              : {}),
+          });
+        }
       }
-      setSolved({ model, result, graphical, integer });
+      setSolved({ model, result, graphical, integer, gomory });
       setSolveCount((n) => n + 1);
     },
-    [method, rule, branchVariable],
+    [method, rule, branchVariable, integerMethod],
   );
 
   const solve = useCallback(() => {
@@ -178,15 +194,17 @@ export function LPModule() {
 
   const integerModel = hasIntegers(live.model ?? lastValid);
   const isInteger = solved !== null && solved.integer !== null;
+  const isGomory = solved !== null && solved.gomory !== null;
   const optimal = solved !== null && solved.result.status === "optimal";
   const disabled: Record<TabKey, boolean> = {
     model: false,
     solution: false,
     tableau: false,
     graph: solved === null || !solved.graphical.applicable,
-    sensitivity: !optimal || isInteger,
-    parametric: !optimal || isInteger,
+    sensitivity: !optimal || isInteger || isGomory,
+    parametric: !optimal || isInteger || isGomory,
     tree: !isInteger,
+    cuts: !isGomory,
   };
   const activeTab: TabKey = disabled[tab] ? "solution" : tab;
   const items = (
@@ -198,9 +216,11 @@ export function LPModule() {
       { key: "sensitivity", label: t("tab.sensitivity") },
       { key: "parametric", label: t("tab.parametric") },
       { key: "tree", label: t("tab.tree") },
+      { key: "cuts", label: t("cuts.tab") },
     ] as const
   )
     .filter((item) => item.key !== "tree" || isInteger)
+    .filter((item) => item.key !== "cuts" || isGomory)
     .map((item) => ({ ...item, disabled: disabled[item.key] }));
 
   return (
@@ -326,6 +346,25 @@ export function LPModule() {
           </label>
           {integerModel && (
             <label>
+              {t("options.integerMethod")}
+              <select
+                value={integerMethod}
+                onChange={(e) =>
+                  setIntegerMethod(e.target.value as IntegerMethod)
+                }
+                data-testid="integer-method-select"
+              >
+                <option value="branchAndBound">
+                  {t("options.integerMethodBranch")}
+                </option>
+                <option value="gomory">
+                  {t("options.integerMethodGomory")}
+                </option>
+              </select>
+            </label>
+          )}
+          {integerModel && integerMethod === "branchAndBound" && (
+            <label>
               {t("options.branch")}
               <select
                 value={branchVariable}
@@ -408,6 +447,14 @@ export function LPModule() {
                 key={solveCount}
                 integer={solved.integer}
                 isMin={solved.model.sense === "min"}
+                numberFormat={numberFormat}
+              />
+            )}
+            {activeTab === "cuts" && solved.gomory && (
+              <CutsTab
+                key={solveCount}
+                solved={solved}
+                gomory={solved.gomory}
                 numberFormat={numberFormat}
               />
             )}

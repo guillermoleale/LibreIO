@@ -5,6 +5,7 @@ import {
   reportClassicInteger,
   reportCombined,
   reportCombinedInteger,
+  reportGomory,
 } from "@libreio/core";
 import { t } from "../i18n";
 import { downloadText } from "../common/download";
@@ -33,6 +34,13 @@ export function SolutionTab({
 }: SolutionTabProps) {
   const number = makeFormatter(numberFormat);
   const report = useMemo(() => {
+    if (solved.gomory) {
+      // No hay formato LINDO para cortes: los dos formatos muestran el mismo reporte.
+      return reportGomory(solved.model, solved.gomory, {
+        numberFormat,
+        decimals: DECIMALS,
+      });
+    }
     if (solved.integer) {
       return format === "classic"
         ? reportClassicInteger(solved.model, solved.integer)
@@ -48,9 +56,11 @@ export function SolutionTab({
           decimals: DECIMALS,
         });
   }, [format, solved, numberFormat]);
-  const messages = solved.integer
-    ? [...solved.integer.messages, ...solved.result.messages]
-    : solved.result.messages;
+  const messages = solved.gomory
+    ? solved.gomory.messages
+    : solved.integer
+      ? [...solved.integer.messages, ...solved.result.messages]
+      : solved.result.messages;
   const baseName = (solved.model.title ?? "solucion").replace(/[^\w-]+/g, "_");
   return (
     <div className="solution-tab">

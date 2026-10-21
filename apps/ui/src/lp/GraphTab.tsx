@@ -298,7 +298,9 @@ export function GraphTab({
   const arrowLen = (rect.xMax - rect.xMin) * 0.25;
   const fmtPoint = (x: Fraction, y: Fraction) => `(${number(x)}, ${number(y)})`;
   const integerSolution =
-    overrides.size === 0 ? (solved.integer?.solution ?? null) : null;
+    overrides.size === 0
+      ? (solved.integer?.solution ?? solved.gomory?.solution ?? null)
+      : null;
   const integerOptimum = integerSolution
     ? {
         x: integerSolution.variables[0]!.value,
