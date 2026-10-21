@@ -18,6 +18,7 @@ test("carga la app, parsea el ejemplo LP-07 y marca un error con su línea", asy
     .getByTestId("examples-select")
     .selectOption({ label: "LP-07 Prueba del parser" });
   await page.getByTestId("solve-button").click();
+  await page.getByTestId("tab-model").click();
   const normalized = page.getByTestId("model-normalized");
   await expect(normalized).toContainText("MAX 3 X + 2 Y - Z + 1/3 W");
   await expect(normalized).toContainText("capacidad) 2 X + Y <= 100");
