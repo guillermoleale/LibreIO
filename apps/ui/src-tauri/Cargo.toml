@@ -1,0 +1,25 @@
+[package]
+name = "libreio"
+version = "0.1.0"
+description = "Software libre y didáctico de Investigación Operativa"
+authors = ["Cátedra de Investigación Operativa, UTN FRRo"]
+license = "GPL-3.0-or-later"
+repository = "https://github.com/guillermoleale/LibreIO"
+edition = "2024"
+rust-version = "1.90"
+
+[lib]
+name = "libreio_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2.7.3" }
+
+[dependencies]
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+log = "0.4"
+tauri = { version = "2.12.4" }
+tauri-plugin-log = "2"
+tauri-plugin-dialog = "2"
+tauri-plugin-fs = "2"
