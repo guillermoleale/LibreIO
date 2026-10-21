@@ -24,6 +24,7 @@ export {
   type Tableau,
 } from "./tableau";
 export {
+  finishPhase,
   isAuxiliaryColumn,
   manualPivot,
   solveLP,
@@ -32,6 +33,7 @@ export {
   type LPResult,
   type LPSolution,
   type LPStatus,
+  type PhaseOutcome,
   type PivotOutcome,
   type SolveOptions,
   type VariableValue,

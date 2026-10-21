@@ -1,20 +1,41 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Módulo de programación lineal: editor a la izquierda, resultados a la derecha.
 import { useCallback, useMemo, useState } from "react";
-import { ParseError, parseLP, type LPModel } from "@libreio/core";
+import {
+  ParseError,
+  graphicalAnalysis,
+  parseLP,
+  solveLP,
+  type EnteringRule,
+  type GraphicalAnalysis,
+  type LPModel,
+  type LPResult,
+  type SimplexMethod,
+} from "@libreio/core";
 import { t } from "../i18n";
 import { lpExamples } from "../common/examples";
 import { openTextFile, saveTextFile } from "../common/files";
+import type { NumberFormat } from "../common/numberFormat";
 import { Tabs } from "../common/Tabs";
+import { GraphTab } from "./GraphTab";
 import { ModelEditor } from "./ModelEditor";
 import { ModelTab } from "./ModelTab";
+import { SensitivityTab } from "./SensitivityTab";
+import { SolutionTab, type ReportFormat } from "./SolutionTab";
+import { TableauTab } from "./TableauTab";
 
-type TabKey = "model";
+type TabKey = "model" | "solution" | "tableau" | "graph" | "sensitivity";
 
 interface ParseOutcome {
   readonly model: LPModel | null;
   readonly errorLine: number | null;
   readonly errorMessage: string | null;
+}
+
+export interface Solved {
+  readonly model: LPModel;
+  readonly result: LPResult;
+  readonly graphical: GraphicalAnalysis;
 }
 
 function tryParse(text: string): ParseOutcome {
@@ -36,23 +57,44 @@ const defaultText =
 
 export function LPModule() {
   const [text, setText] = useState(defaultText);
-  const [fileName, setFileName] = useState("modelo.lp");
-  const [submitted, setSubmitted] = useState<ParseOutcome | null>(null);
-  const [tab, setTab] = useState<TabKey>("model");
+  const [fileName, setFileName] = useState("LP-01-optimo-unico.lp");
+  const [method, setMethod] = useState<SimplexMethod>("twoPhase");
+  const [rule, setRule] = useState<EnteringRule>("dantzig");
+  const [numberFormat, setNumberFormat] = useState<NumberFormat>("fraction");
+  const [reportFormat, setReportFormat] = useState<ReportFormat>("combined");
+  const [solved, setSolved] = useState<Solved | null>(null);
+  const [solveCount, setSolveCount] = useState(0);
+  const [tab, setTab] = useState<TabKey>("solution");
   const [notice, setNotice] = useState<string | null>(null);
 
   const live = useMemo(() => tryParse(text), [text]);
 
+  const solveModel = useCallback(
+    (model: LPModel) => {
+      const result = solveLP(model, { method, rule });
+      const graphical = graphicalAnalysis(model);
+      setSolved({ model, result, graphical });
+      setSolveCount((n) => n + 1);
+    },
+    [method, rule],
+  );
+
   const solve = useCallback(() => {
-    setSubmitted(tryParse(text));
-  }, [text]);
+    const parsed = tryParse(text);
+    if (parsed.model === null) {
+      setSolved(null);
+      return;
+    }
+    solveModel(parsed.model);
+    setTab((current) => (current === "model" ? "solution" : current));
+  }, [text, solveModel]);
 
   const loadExample = (id: string) => {
     const example = lpExamples.find((e) => e.id === id);
     if (example) {
       setText(example.text);
       setFileName(`${example.id}.lp`);
-      setSubmitted(null);
+      setSolved(null);
     }
   };
 
@@ -62,7 +104,7 @@ export function LPModule() {
       if (file) {
         setText(file.text);
         setFileName(file.name);
-        setSubmitted(null);
+        setSolved(null);
         setNotice(null);
       }
     } catch {
@@ -78,9 +120,22 @@ export function LPModule() {
     }
   };
 
-  const shown = submitted ?? live;
-  const errorLine = live.errorLine;
-  const errorMessage = live.errorMessage;
+  const applyModelText = (newText: string) => {
+    setText(newText);
+    const parsed = tryParse(newText);
+    if (parsed.model) {
+      solveModel(parsed.model);
+    }
+  };
+
+  const graphDisabled = solved === null || !solved.graphical.applicable;
+  const sensitivityDisabled =
+    solved === null || solved.result.status !== "optimal";
+  const activeTab: TabKey =
+    (tab === "graph" && graphDisabled) ||
+    (tab === "sensitivity" && sensitivityDisabled)
+      ? "solution"
+      : tab;
 
   return (
     <div className="workspace" data-testid="lp-module">
@@ -137,9 +192,44 @@ export function LPModule() {
           value={text}
           onChange={setText}
           onSolve={solve}
-          errorLine={errorLine}
-          errorMessage={errorMessage}
+          errorLine={live.errorLine}
+          errorMessage={live.errorMessage}
         />
+        <div className="options" data-testid="options">
+          <label>
+            {t("options.method")}
+            <select
+              value={method}
+              onChange={(e) => setMethod(e.target.value as SimplexMethod)}
+              data-testid="method-select"
+            >
+              <option value="twoPhase">{t("options.twoPhase")}</option>
+              <option value="bigM">{t("options.bigM")}</option>
+            </select>
+          </label>
+          <label>
+            {t("options.rule")}
+            <select
+              value={rule}
+              onChange={(e) => setRule(e.target.value as EnteringRule)}
+              data-testid="rule-select"
+            >
+              <option value="dantzig">{t("options.dantzig")}</option>
+              <option value="bland">{t("options.bland")}</option>
+            </select>
+          </label>
+          <label>
+            {t("options.numbers")}
+            <select
+              value={numberFormat}
+              onChange={(e) => setNumberFormat(e.target.value as NumberFormat)}
+              data-testid="numbers-select"
+            >
+              <option value="fraction">{t("options.fraction")}</option>
+              <option value="decimal">{t("options.decimal")}</option>
+            </select>
+          </label>
+        </div>
         {notice !== null && (
           <p className="notice" role="status">
             {notice}
@@ -150,18 +240,58 @@ export function LPModule() {
         <header className="panel-header">
           <h2 id="results-title">{t("results.title")}</h2>
         </header>
-        {shown.model === null ? (
+        {solved === null ? (
           <p className="empty" data-testid="results-empty">
-            {t("results.empty")}
+            {live.errorMessage !== null
+              ? t("results.fixErrors")
+              : t("results.empty")}
           </p>
         ) : (
           <Tabs<TabKey>
-            items={[{ key: "model", label: t("tab.model") }]}
-            active={tab}
+            items={[
+              { key: "model", label: t("tab.model") },
+              { key: "solution", label: t("tab.solution") },
+              { key: "tableau", label: t("tab.tableau") },
+              { key: "graph", label: t("tab.graph"), disabled: graphDisabled },
+              {
+                key: "sensitivity",
+                label: t("tab.sensitivity"),
+                disabled: sensitivityDisabled,
+              },
+            ]}
+            active={activeTab}
             onChange={setTab}
             idPrefix="lp"
           >
-            <ModelTab model={shown.model} />
+            {activeTab === "model" && (
+              <ModelTab solved={solved} numberFormat={numberFormat} />
+            )}
+            {activeTab === "solution" && (
+              <SolutionTab
+                solved={solved}
+                numberFormat={numberFormat}
+                format={reportFormat}
+                onFormatChange={setReportFormat}
+              />
+            )}
+            {activeTab === "tableau" && (
+              <TableauTab
+                key={solveCount}
+                solved={solved}
+                numberFormat={numberFormat}
+              />
+            )}
+            {activeTab === "graph" && (
+              <GraphTab
+                key={solveCount}
+                solved={solved}
+                numberFormat={numberFormat}
+                onApplyModel={applyModelText}
+              />
+            )}
+            {activeTab === "sensitivity" && (
+              <SensitivityTab solved={solved} numberFormat={numberFormat} />
+            )}
           </Tabs>
         )}
       </section>

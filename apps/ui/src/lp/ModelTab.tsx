@@ -1,15 +1,19 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { useState } from "react";
-import { formatLP, type LPModel } from "@libreio/core";
+import { reportModel } from "@libreio/core";
 import { t } from "../i18n";
+import { DECIMALS, type NumberFormat } from "../common/numberFormat";
+import type { Solved } from "./LPModule";
 
 interface ModelTabProps {
-  readonly model: LPModel;
+  readonly solved: Solved;
+  readonly numberFormat: NumberFormat;
 }
 
-export function ModelTab({ model }: ModelTabProps) {
+export function ModelTab({ solved, numberFormat }: ModelTabProps) {
   const [copied, setCopied] = useState(false);
-  const text = formatLP(model);
+  const { model, result } = solved;
+  const text = reportModel(model, result, { numberFormat, decimals: DECIMALS });
   const copy = () => {
     navigator.clipboard
       ?.writeText(text)

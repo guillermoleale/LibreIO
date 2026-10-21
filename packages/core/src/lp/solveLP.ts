@@ -550,3 +550,33 @@ export function manualPivot(
 }
 
 export { basicNames, MValue };
+
+export type PhaseOutcome =
+  | { readonly kind: "notOptimal" }
+  | { readonly kind: "infeasible"; readonly infeasibility: Infeasibility[] }
+  | { readonly kind: "phase2"; readonly tableau: Tableau }
+  | { readonly kind: "optimal"; readonly objective: Fraction };
+
+/**
+ * Cierra la fase actual de un tableau óptimo en el modo guiado: pasa de la fase 1 a la fase 2,
+ * informa infactibilidad o confirma el óptimo del problema.
+ */
+export function finishPhase(t: Tableau, sf: StandardForm): PhaseOutcome {
+  if (analyzeTableau(t, "dantzig").kind !== "optimal") {
+    return { kind: "notOptimal" };
+  }
+  const positive = positiveArtificials(t, sf);
+  if (positive.length > 0) {
+    return { kind: "infeasible", infeasibility: positive };
+  }
+  if (t.phase === "phase1") {
+    const cleaned = driveOutArtificials(t, sf, []);
+    return {
+      kind: "phase2",
+      tableau: withObjective(cleaned, phaseCosts(sf, "phase2"), "phase2"),
+    };
+  }
+  const objective =
+    sf.sense === "max" ? t.objectiveValue.c : t.objectiveValue.c.neg();
+  return { kind: "optimal", objective };
+}
