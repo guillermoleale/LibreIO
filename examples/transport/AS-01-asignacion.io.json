@@ -1,0 +1,12 @@
+{
+  "type": "assignment",
+  "title": "AS-01 Asignación",
+  "sense": "min",
+  "agents": ["1", "2", "3"],
+  "tasks": ["1", "2", "3"],
+  "costs": [
+    [9, 2, 7],
+    [6, 4, 3],
+    [5, 8, 1]
+  ]
+}

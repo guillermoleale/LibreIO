@@ -1,0 +1,12 @@
+{
+  "type": "assignment",
+  "title": "Asignación de maximización (rendimientos)",
+  "sense": "max",
+  "agents": ["Equipo 1", "Equipo 2", "Equipo 3"],
+  "tasks": ["Proyecto A", "Proyecto B", "Proyecto C"],
+  "costs": [
+    [15, 10, 9],
+    [9, 15, 10],
+    [10, 12, 8]
+  ]
+}

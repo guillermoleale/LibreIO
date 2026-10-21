@@ -1,0 +1,20 @@
+{
+  "type": "transshipment",
+  "title": "TR-03 Transbordo",
+  "sense": "min",
+  "nodes": [
+    { "name": "S1", "supply": 10 },
+    { "name": "S2", "supply": 5 },
+    { "name": "T" },
+    { "name": "D1", "demand": 8 },
+    { "name": "D2", "demand": 7 }
+  ],
+  "arcs": [
+    { "from": "S1", "to": "T", "cost": 2 },
+    { "from": "S2", "to": "T", "cost": 3 },
+    { "from": "T", "to": "D1", "cost": 1 },
+    { "from": "T", "to": "D2", "cost": 2 },
+    { "from": "S1", "to": "D1", "cost": 5 },
+    { "from": "S2", "to": "D2", "cost": 4 }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "type": "assignment",
+  "title": "Asignación desbalanceada con tarea prohibida",
+  "sense": "min",
+  "agents": ["Ana", "Bruno", "Carla", "Diego"],
+  "tasks": ["Soldar", "Pintar", "Armar"],
+  "costs": [
+    [14, 5, 8],
+    [2, 12, 6],
+    [7, 8, "M"],
+    [2, 4, 6]
+  ]
+}

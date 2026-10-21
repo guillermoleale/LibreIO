@@ -1,0 +1,13 @@
+{
+  "type": "transport",
+  "title": "Transporte de maximización con ruta prohibida",
+  "sense": "max",
+  "sources": ["Planta A", "Planta B"],
+  "destinations": ["Norte", "Centro", "Sur"],
+  "supply": [40, 60],
+  "demand": [30, 50, 20],
+  "costs": [
+    [8, 6, "M"],
+    [5, 9, 7]
+  ]
+}
