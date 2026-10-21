@@ -73,3 +73,8 @@ Todo el núcleo trabaja con `Fraction` sobre `BigInt`. Los decimales de la entra
 - Las fórmulas de colas usan `Fraction` de punta a punta; las sumas finitas (M/M/s/K, población finita) se calculan término a término con factoriales en BigInt.
 - La inversa de la normal se comparte con PERT. Para que los resultados sigan siendo fracciones, z se redondea a seis decimales antes de multiplicar.
 - Los juegos se plantean como dos programas lineales con valor libre (sin desplazar la matriz) y se resuelven con el simplex exacto, así el valor y las estrategias son fracciones.
+
+## Programación dinámica y Markov
+
+- Las tablas de etapa de la mochila guardan, para cada capacidad, el valor de cada cantidad de unidades posible; así la interfaz muestra la recurrencia completa y no solo la decisión.
+- El álgebra lineal exacta de Markov (eliminación gaussiana con pivoteo sobre fracciones) resuelve la distribución estacionaria, los tiempos medios de primer paso (un sistema por columna destino) y la matriz fundamental N = (I - Q)^-1.

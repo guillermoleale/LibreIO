@@ -41,6 +41,11 @@ Programación lineal, que reemplaza a GLP y LINDO:
 - Inventarios: EOQ básico, con faltantes, con tasa de producción finita, con tiempo de entrega y con descuentos por cantidad; una sola compra con demanda discreta, uniforme o normal; revisión continua con stock de seguridad; gráficos de nivel y de costos contra Q
 - Decisiones: tabla de pagos con maximax, maximin, Laplace, Hurwicz, Savage, valor esperado, arrepentimiento esperado y VEIP; revisión bayesiana con VEIM y eficiencia; árboles de decisión dibujados y resueltos hacia atrás; juegos de suma cero con punto de silla, dominancia, resolución gráfica y programación lineal
 
+## Qué agregan las versiones 1.4 y 1.5
+
+- 1.4: programación dinámica (mochila con varias unidades y diligencia con etapas dadas o deducidas, con la tabla de cada etapa) y cadenas de Markov (clasificación de estados, distribución en n pasos, estado estable, tiempos medios de primer paso y de recurrencia y análisis de estados absorbentes), todo en fracciones exactas
+- 1.5: manual para alumnos en [docs/manual.md](docs/manual.md), versión web que funciona sin conexión después de la primera carga (PWA con service worker) y cortes de Gomory como método alternativo para programación entera, con la traza de cada corte
+
 ## Modelos
 
 Los modelos se escriben en el formato de LINDO clásico, así que las guías de ejercicios existentes sirven tal cual:
