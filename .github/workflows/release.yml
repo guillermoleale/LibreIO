@@ -79,11 +79,20 @@ jobs:
       - name: Verificar la firma ad hoc del bundle de macOS
         if: startsWith(matrix.platform, 'macos')
         run: |
-          APP=$(find apps/ui/src-tauri/target -maxdepth 6 -type d -name "LibreIO.app" | head -1)
-          test -n "$APP" || { echo "no se encontró LibreIO.app"; exit 1; }
-          codesign -dv --verbose=2 "$APP" 2>&1 | tee /tmp/codesign.txt
-          grep -q "Signature=adhoc" /tmp/codesign.txt || { echo "el bundle no quedó firmado ad hoc"; exit 1; }
-          codesign --verify --deep --strict --verbose=2 "$APP"
+          shopt -s nullglob
+          APPS=(apps/ui/src-tauri/target/*/release/bundle/macos/*.app apps/ui/src-tauri/target/release/bundle/macos/*.app)
+          if [ ${#APPS[@]} -eq 0 ]; then
+            echo "no se encontró el bundle"
+            ls apps/ui/src-tauri/target apps/ui/src-tauri/target/*/release/bundle 2>&1 | head -40
+            exit 1
+          fi
+          for APP in "${APPS[@]}"; do
+            echo "== $APP"
+            codesign -dv --verbose=2 "$APP" 2>&1 | tee /tmp/codesign.txt
+            grep -q "Signature=adhoc" /tmp/codesign.txt || { echo "el bundle no quedó firmado ad hoc"; exit 1; }
+            codesign --verify --deep --strict --verbose=2 "$APP"
+            test -f "$APP/Contents/_CodeSignature/CodeResources"
+          done
       - name: Publicar ejecutable portable de Windows
         if: matrix.platform == 'windows-latest' && github.ref_type == 'tag'
         shell: pwsh
