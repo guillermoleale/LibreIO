@@ -35,6 +35,12 @@ Programación lineal, que reemplaza a GLP y LINDO:
 - Redes: camino mínimo con Dijkstra y traza de etiquetas, flujo máximo con caminos de aumento y corte mínimo, árbol de expansión mínima por Kruskal y Prim, y viajante exacto hasta 10 nodos con vecino más cercano e inserción más barata como comparación. Grafo dibujado por capas con la solución resaltada paso a paso
 - PERT/CPM: tiempos tempranos y tardíos, holguras total y libre, caminos críticos, PERT con tres estimaciones y probabilidades, compresión al mínimo costo con curva de costo contra duración, red de actividades en nodos y Gantt
 
+## Qué agrega la versión 1.3
+
+- Colas: M/M/1, M/M/s, M/M/1/K, M/M/s/K, M/M/s con población finita, M/G/1, M/D/1 y M/Ek/1 con todas las medidas exactas en fracciones, tabla de Pn, análisis de costos y de capacidad variando s, λ, μ o K
+- Inventarios: EOQ básico, con faltantes, con tasa de producción finita, con tiempo de entrega y con descuentos por cantidad; una sola compra con demanda discreta, uniforme o normal; revisión continua con stock de seguridad; gráficos de nivel y de costos contra Q
+- Decisiones: tabla de pagos con maximax, maximin, Laplace, Hurwicz, Savage, valor esperado, arrepentimiento esperado y VEIP; revisión bayesiana con VEIM y eficiencia; árboles de decisión dibujados y resueltos hacia atrás; juegos de suma cero con punto de silla, dominancia, resolución gráfica y programación lineal
+
 ## Modelos
 
 Los modelos se escriben en el formato de LINDO clásico, así que las guías de ejercicios existentes sirven tal cual:

@@ -67,3 +67,9 @@ Todo el núcleo trabaja con `Fraction` sobre `BigInt`. Los decimales de la entra
 
 - Los caminos críticos se obtienen recorriendo solo actividades con holgura total cero y exigiendo que el fin temprano de una coincida con el inicio temprano de la siguiente, para no mezclar actividades críticas de caminos distintos.
 - La compresión es el programa lineal clásico de Hillier y Lieberman resuelto con el simplex exacto del núcleo, así el costo de cada duración es exacto y considera todos los caminos.
+
+## Colas, inventarios y decisiones
+
+- Las fórmulas de colas usan `Fraction` de punta a punta; las sumas finitas (M/M/s/K, población finita) se calculan término a término con factoriales en BigInt.
+- La inversa de la normal se comparte con PERT. Para que los resultados sigan siendo fracciones, z se redondea a seis decimales antes de multiplicar.
+- Los juegos se plantean como dos programas lineales con valor libre (sin desplazar la matriz) y se resuelven con el simplex exacto, así el valor y las estrategias son fracciones.
