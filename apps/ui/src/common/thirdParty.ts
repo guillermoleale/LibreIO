@@ -5,7 +5,7 @@ export interface Dependency {
   readonly name: string;
   readonly license: string;
   readonly url: string;
-  readonly scope: "web y escritorio" | "solo escritorio";
+  readonly scope: "web y escritorio" | "solo escritorio" | "solo web";
 }
 
 export const dependencies: readonly Dependency[] = [
@@ -32,6 +32,12 @@ export const dependencies: readonly Dependency[] = [
     license: "MIT o Apache-2.0",
     url: "https://tauri.app/plugin/file-system/",
     scope: "solo escritorio",
+  },
+  {
+    name: "vite-plugin-pwa (Workbox)",
+    license: "MIT",
+    url: "https://vite-pwa-org.netlify.app",
+    scope: "solo web",
   },
   {
     name: "tauri-plugin-log",
