@@ -259,9 +259,9 @@ Las fases 0 y 1 se ejecutan de corrido y terminan con `v1.0.0` publicada. Cada f
 - [x] Fase 1. Programación lineal: simplex, dos fases, Big M, pivoteo manual, sensibilidad, dual, reporte combinado y clásico, tableau clásico, método gráfico. Reemplaza a GLP y LINDO. Casos LP-01 a LP-08 y UI-01 a UI-03. Tag `v1.0.0`
 - [x] Fase 2. Paramétrico, entera, transporte, transbordo y asignación. Casos LP-09, LP-10, ILP-01, TR-01 a TR-03, AS-01
 - [x] Fase 3. Redes, viajante y PERT/CPM con compresión. Casos NET-01 a NET-04, PERT-01 a PERT-03
-- [ ] Fase 4. Colas, inventarios y decisiones. Casos Q-01 a Q-04, INV-01 a INV-03, DEC-01 a DEC-03
-- [ ] Fase 5. Programación dinámica y Markov. Casos DP-01, DP-02, MK-01, MK-02
-- [ ] Fase 6. Pulido: ejemplos de la cátedra, manual para alumnos, PWA sin conexión, cortes de Gomory, firma de código si hay presupuesto
+- [x] Fase 4. Colas, inventarios y decisiones. Casos Q-01 a Q-04, INV-01 a INV-03, DEC-01 a DEC-03
+- [x] Fase 5. Programación dinámica y Markov. Casos DP-01, DP-02, MK-01, MK-02
+- [x] Fase 6. Pulido: ejemplos de la cátedra, manual para alumnos, PWA sin conexión, cortes de Gomory, firma de código si hay presupuesto
 
 ## 9. Fuera de alcance
 
