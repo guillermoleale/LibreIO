@@ -86,7 +86,8 @@ jobs:
           for DMG in "${DMGS[@]}"; do
             echo "== $DMG"
             MOUNT=$(mktemp -d)
-            hdiutil attach -nobrowse -readonly -mountpoint "$MOUNT" "$DMG" >/dev/null
+            # El dmg trae la licencia como acuerdo de uso y hdiutil pide aceptarla
+            yes | hdiutil attach -nobrowse -readonly -mountpoint "$MOUNT" "$DMG" >/dev/null
             APP=("$MOUNT"/*.app)
             codesign -dv --verbose=2 "${APP[0]}" 2>&1 | tee /tmp/codesign.txt
             if ! grep -q "Signature=adhoc" /tmp/codesign.txt; then
