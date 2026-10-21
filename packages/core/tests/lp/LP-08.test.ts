@@ -34,26 +34,45 @@ function randomModel(rng: () => number): LPModel {
     upper: { finite: false, sign: 1 } as const,
     kind: "continuous" as const,
   }));
-  const objective = Array.from({ length: n }, () => Fraction.of(randomInt(rng, -9, 9)));
+  const objective = Array.from({ length: n }, () =>
+    Fraction.of(randomInt(rng, -9, 9)),
+  );
   const constraints = Array.from({ length: m }, (_, i) => ({
     label: null,
     row: i + 2,
-    coefficients: Array.from({ length: n }, () => Fraction.of(randomInt(rng, -9, 9))),
+    coefficients: Array.from({ length: n }, () =>
+      Fraction.of(randomInt(rng, -9, 9)),
+    ),
     relation: relations[randomInt(rng, 0, 2)]!,
     rhs: Fraction.of(randomInt(rng, 1, 50)),
   }));
-  return { title: null, sense: rng() < 0.5 ? "max" : "min", variables, objective, constraints };
+  return {
+    title: null,
+    sense: rng() < 0.5 ? "max" : "min",
+    variables,
+    objective,
+    constraints,
+  };
 }
 
 function toCplexLp(model: LPModel): string {
   const names = model.variables.map((v) => v.name);
   const expr = (coefs: Fraction[]): string =>
     coefs
-      .map((c, i) => `${c.isNegative() ? "-" : "+"} ${c.abs().toString()} ${names[i]}`)
+      .map(
+        (c, i) =>
+          `${c.isNegative() ? "-" : "+"} ${c.abs().toString()} ${names[i]}`,
+      )
       .join(" ");
-  const lines = [model.sense === "max" ? "Maximize" : "Minimize", ` obj: ${expr(model.objective)}`, "Subject To"];
+  const lines = [
+    model.sense === "max" ? "Maximize" : "Minimize",
+    ` obj: ${expr(model.objective)}`,
+    "Subject To",
+  ];
   model.constraints.forEach((c, i) => {
-    lines.push(` c${i + 1}: ${expr(c.coefficients)} ${c.relation} ${c.rhs.toString()}`);
+    lines.push(
+      ` c${i + 1}: ${expr(c.coefficients)} ${c.relation} ${c.rhs.toString()}`,
+    );
   });
   lines.push("Bounds");
   for (const name of names) {
@@ -80,7 +99,10 @@ describe("LP-08. Verificación cruzada contra highs", () => {
       const label = `problema ${k}`;
       if (theirs.Status === "Optimal") {
         expect(ours.status, label).toBe("optimal");
-        expect(Math.abs(ours.solution!.objective.toNumber() - theirs.ObjectiveValue), label).toBeLessThan(1e-9);
+        expect(
+          Math.abs(ours.solution!.objective.toNumber() - theirs.ObjectiveValue),
+          label,
+        ).toBeLessThan(1e-9);
         counts.optimal += 1;
       } else if (theirs.Status === "Infeasible") {
         expect(ours.status, label).toBe("infeasible");
@@ -90,7 +112,10 @@ describe("LP-08. Verificación cruzada contra highs", () => {
         counts.unbounded += 1;
       } else {
         // Estados ambiguos de highs (por ejemplo unbounded or infeasible): nuestro estado debe ser uno de los dos
-        expect(["unbounded", "infeasible"], `${label}: ${theirs.Status}`).toContain(ours.status);
+        expect(
+          ["unbounded", "infeasible"],
+          `${label}: ${theirs.Status}`,
+        ).toContain(ours.status);
       }
     }
     // Las tres clases aparecen en la muestra, para que el test tenga sentido
@@ -109,8 +134,12 @@ describe("LP-08. Verificación cruzada contra highs", () => {
       expect(bigM.status, `problema ${k} bigM`).toBe(base.status);
       expect(bland.status, `problema ${k} bland`).toBe(base.status);
       if (base.status === "optimal") {
-        expect(bigM.solution!.objective, `problema ${k} bigM`).toEqual(base.solution!.objective);
-        expect(bland.solution!.objective, `problema ${k} bland`).toEqual(base.solution!.objective);
+        expect(bigM.solution!.objective, `problema ${k} bigM`).toEqual(
+          base.solution!.objective,
+        );
+        expect(bland.solution!.objective, `problema ${k} bland`).toEqual(
+          base.solution!.objective,
+        );
       }
     }
   }, 60_000);

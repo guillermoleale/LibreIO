@@ -32,7 +32,9 @@ describe("Tableau en formato clásico", () => {
   it("el tableau final de LP-01 muestra la base óptima y Z = 180", () => {
     const final = solveLP(model).trace.at(-1)!.tableau;
     const text = reportClassicTableau(final);
-    expect(text).toContain("         1      ART    0.000    0.000    1.000    1.000    0.000  180.000");
+    expect(text).toContain(
+      "         1      ART    0.000    0.000    1.000    1.000    0.000  180.000",
+    );
     expect(text).toContain("         2        Y");
     expect(text).toContain("         4        X");
   });

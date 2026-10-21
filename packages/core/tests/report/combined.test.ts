@@ -5,7 +5,9 @@ import { solveLP } from "../../src/lp";
 import { reportCombined, reportModel } from "../../src/report";
 
 describe("Reporte combinado", () => {
-  const model = parseLP("TITLE Prueba\nMIN 2X + 3Y\nST\nuno) X + Y >= 4\ndos) X + 3Y >= 6\nEND");
+  const model = parseLP(
+    "TITLE Prueba\nMIN 2X + 3Y\nST\nuno) X + Y >= 4\ndos) X + 3Y >= 6\nEND",
+  );
   const result = solveLP(model);
 
   it("muestra el título, las etiquetas de las filas y la dirección >=", () => {
@@ -18,7 +20,10 @@ describe("Reporte combinado", () => {
   });
 
   it("acepta vista decimal", () => {
-    const text = reportCombined(model, result, { numberFormat: "decimal", decimals: 3 });
+    const text = reportCombined(model, result, {
+      numberFormat: "decimal",
+      decimals: 3,
+    });
     expect(text).toContain("Z = 9.000");
     expect(text).toMatch(/^uno\s+4\.000\s+>=\s+4\.000\s+0\.000\s+1\.500/m);
   });

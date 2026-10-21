@@ -3,7 +3,12 @@
 import { describe, expect, it } from "vitest";
 import { Fraction } from "../../src/rational/Fraction";
 import { parseLP } from "../../src/parser";
-import { initialTableau, manualPivot, solveLP, toStandardForm } from "../../src/lp";
+import {
+  initialTableau,
+  manualPivot,
+  solveLP,
+  toStandardForm,
+} from "../../src/lp";
 
 const fr = (s: string): Fraction => Fraction.parse(s);
 
@@ -67,14 +72,20 @@ describe("LP-11. Pivoteo manual", () => {
   });
 
   it("rechaza una variable con costo reducido que no mejora sin modificar el tableau", () => {
-    const snapshot = JSON.stringify(t0, (_, v: unknown) => (typeof v === "bigint" ? v.toString() : v));
+    const snapshot = JSON.stringify(t0, (_, v: unknown) =>
+      typeof v === "bigint" ? v.toString() : v,
+    );
     const outcome = manualPivot(t0, "SLK 2");
     expect(outcome.ok).toBe(false);
     if (!outcome.ok) {
       expect(outcome.error).toMatch(/SLK 2/);
       expect(outcome.error).toMatch(/no mejora/i);
     }
-    expect(JSON.stringify(t0, (_, v: unknown) => (typeof v === "bigint" ? v.toString() : v))).toBe(snapshot);
+    expect(
+      JSON.stringify(t0, (_, v: unknown) =>
+        typeof v === "bigint" ? v.toString() : v,
+      ),
+    ).toBe(snapshot);
     const unknown = manualPivot(t0, "W");
     expect(unknown.ok).toBe(false);
     const basic = manualPivot(t0, "SLK 4");

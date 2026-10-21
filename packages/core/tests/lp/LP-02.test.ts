@@ -27,16 +27,35 @@ describe("LP-02. Minimización con mayor o igual", () => {
         { name: "Y", value: fr("1") },
       ]);
       expect(r.solution?.objective).toEqual(fr("9"));
-      expect(r.sensitivity?.constraints.map((c) => c.shadowPrice)).toEqual([fr("3/2"), fr("1/2")]);
-      expect(r.sensitivity?.constraints.map((c) => c.dualPrice)).toEqual([fr("-3/2"), fr("-1/2")]);
-      expect(r.sensitivity?.constraints.map((c) => c.slack)).toEqual([fr("0"), fr("0")]);
-      expect(r.sensitivity?.variables.map((v) => v.reducedCost)).toEqual([fr("0"), fr("0")]);
+      expect(r.sensitivity?.constraints.map((c) => c.shadowPrice)).toEqual([
+        fr("3/2"),
+        fr("1/2"),
+      ]);
+      expect(r.sensitivity?.constraints.map((c) => c.dualPrice)).toEqual([
+        fr("-3/2"),
+        fr("-1/2"),
+      ]);
+      expect(r.sensitivity?.constraints.map((c) => c.slack)).toEqual([
+        fr("0"),
+        fr("0"),
+      ]);
+      expect(r.sensitivity?.variables.map((v) => v.reducedCost)).toEqual([
+        fr("0"),
+        fr("0"),
+      ]);
     });
   }
 
   it("la forma estándar agrega exceso y artificial por fila con nombres SLK n y ART n", () => {
     const sf = toStandardForm(model);
-    expect(sf.columns.map((c) => c.name)).toEqual(["X", "Y", "SLK 2", "SLK 3", "ART 2", "ART 3"]);
+    expect(sf.columns.map((c) => c.name)).toEqual([
+      "X",
+      "Y",
+      "SLK 2",
+      "SLK 3",
+      "ART 2",
+      "ART 3",
+    ]);
     expect(sf.columns.map((c) => c.kind)).toEqual([
       "decision",
       "decision",
@@ -57,7 +76,9 @@ describe("LP-02. Minimización con mayor o igual", () => {
     expect(phases[0]).toBe("phase1");
     expect(phases[phases.length - 1]).toBe("phase2");
     expect(phases.indexOf("phase2")).toBeGreaterThan(0);
-    expect(r.iterations).toBe(r.trace.filter((s) => s.entering !== null).length);
+    expect(r.iterations).toBe(
+      r.trace.filter((s) => s.entering !== null).length,
+    );
   });
 
   it("Big M: la fila objetivo inicial tiene coeficientes con M simbólica", () => {
@@ -88,7 +109,11 @@ describe("LP-02. Minimización con mayor o igual", () => {
     expect(dual.model.variables.map((v) => v.name)).toEqual(["Y1", "Y2"]);
     expect(dual.model.objective).toEqual([fr("4"), fr("6")]);
     expect(
-      dual.model.constraints.map((c) => ({ coefficients: c.coefficients, relation: c.relation, rhs: c.rhs })),
+      dual.model.constraints.map((c) => ({
+        coefficients: c.coefficients,
+        relation: c.relation,
+        rhs: c.rhs,
+      })),
     ).toEqual([
       { coefficients: [fr("1"), fr("1")], relation: "<=", rhs: fr("2") },
       { coefficients: [fr("1"), fr("3")], relation: "<=", rhs: fr("3") },

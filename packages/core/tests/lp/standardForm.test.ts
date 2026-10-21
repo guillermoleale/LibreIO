@@ -8,9 +8,18 @@ const fr = (s: string): Fraction => Fraction.parse(s);
 
 describe("Forma estándar", () => {
   it("usa holgura para <=, exceso y artificial para >= y solo artificial para =", () => {
-    const model = parseLP("MAX X + Y\nST\nX + Y <= 4\nX - Y >= 1\nX + 2Y = 3\nEND");
+    const model = parseLP(
+      "MAX X + Y\nST\nX + Y <= 4\nX - Y >= 1\nX + 2Y = 3\nEND",
+    );
     const sf = toStandardForm(model);
-    expect(sf.columns.map((c) => c.name)).toEqual(["X", "Y", "SLK 2", "SLK 3", "ART 3", "ART 4"]);
+    expect(sf.columns.map((c) => c.name)).toEqual([
+      "X",
+      "Y",
+      "SLK 2",
+      "SLK 3",
+      "ART 3",
+      "ART 4",
+    ]);
     expect(sf.columns.map((c) => c.kind)).toEqual([
       "decision",
       "decision",
@@ -19,11 +28,34 @@ describe("Forma estándar", () => {
       "artificial",
       "artificial",
     ]);
-    expect(sf.rows[0]).toMatchObject({ relation: "<=", slackColumn: 2, artificialColumn: null });
-    expect(sf.rows[1]).toMatchObject({ relation: ">=", slackColumn: 3, artificialColumn: 4 });
-    expect(sf.rows[2]).toMatchObject({ relation: "=", slackColumn: null, artificialColumn: 5 });
-    expect(sf.initialBasis.map((c) => sf.columns[c]!.name)).toEqual(["SLK 2", "ART 3", "ART 4"]);
-    expect(sf.A[1]).toEqual([fr("1"), fr("-1"), fr("0"), fr("-1"), fr("1"), fr("0")]);
+    expect(sf.rows[0]).toMatchObject({
+      relation: "<=",
+      slackColumn: 2,
+      artificialColumn: null,
+    });
+    expect(sf.rows[1]).toMatchObject({
+      relation: ">=",
+      slackColumn: 3,
+      artificialColumn: 4,
+    });
+    expect(sf.rows[2]).toMatchObject({
+      relation: "=",
+      slackColumn: null,
+      artificialColumn: 5,
+    });
+    expect(sf.initialBasis.map((c) => sf.columns[c]!.name)).toEqual([
+      "SLK 2",
+      "ART 3",
+      "ART 4",
+    ]);
+    expect(sf.A[1]).toEqual([
+      fr("1"),
+      fr("-1"),
+      fr("0"),
+      fr("-1"),
+      fr("1"),
+      fr("0"),
+    ]);
   });
 
   it("multiplica por -1 las filas con lado derecho negativo", () => {
@@ -49,7 +81,11 @@ describe("Forma estándar", () => {
       { name: "X", value: fr("3") },
       { name: "Y", value: fr("4") },
     ]);
-    expect(r.standardForm.rows.map((row) => row.label)).toEqual([null, "SUB X", "SUB Y"]);
+    expect(r.standardForm.rows.map((row) => row.label)).toEqual([
+      null,
+      "SUB X",
+      "SUB Y",
+    ]);
   });
 
   it("las cotas inferiores positivas se agregan como filas", () => {
@@ -65,7 +101,9 @@ describe("Forma estándar", () => {
   it("una variable libre se desdobla en dos columnas y se recompone en la solución", () => {
     const model = parseLP("MIN X\nST\nX >= -5\nEND\nFREE X");
     const sf = toStandardForm(model);
-    expect(sf.columns.filter((c) => c.kind === "decision").map((c) => c.name)).toEqual(["X+", "X-"]);
+    expect(
+      sf.columns.filter((c) => c.kind === "decision").map((c) => c.name),
+    ).toEqual(["X+", "X-"]);
     const r = solveLP(model);
     expect(r.status).toBe("optimal");
     expect(r.solution?.variables).toEqual([{ name: "X", value: fr("-5") }]);
@@ -81,7 +119,9 @@ describe("Forma estándar", () => {
   });
 
   it("las variables enteras se resuelven como relajación continua y se avisa", () => {
-    const model = parseLP("MAX 3X + 2Y\nST\n2X + Y <= 100\nX + Y <= 80\nX <= 40\nEND\nGIN X");
+    const model = parseLP(
+      "MAX 3X + 2Y\nST\n2X + Y <= 100\nX + Y <= 80\nX <= 40\nEND\nGIN X",
+    );
     const r = solveLP(model);
     expect(r.status).toBe("optimal");
     expect(r.solution?.objective).toEqual(fr("180"));

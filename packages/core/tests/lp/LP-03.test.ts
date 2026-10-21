@@ -22,7 +22,10 @@ describe("LP-03. Ilimitado", () => {
     expect(result.status).toBe("unbounded");
     expect(result.solution).toBeNull();
     expect(result.sensitivity).toBeNull();
-    expect(result.trace[0]).toMatchObject({ enteringName: "X", leavingName: "SLK 2" });
+    expect(result.trace[0]).toMatchObject({
+      enteringName: "X",
+      leavingName: "SLK 2",
+    });
     expect(result.trace).toHaveLength(2);
     const last = result.trace[1]!;
     expect(last.enteringName).toBe("Y");

@@ -26,18 +26,28 @@ describe("LP-05. Óptimos alternativos", () => {
       { name: "X", value: fr("3") },
       { name: "Y", value: fr("1") },
     ]);
-    expect(result.trace[0]).toMatchObject({ enteringName: "X", leavingName: "SLK 3" });
+    expect(result.trace[0]).toMatchObject({
+      enteringName: "X",
+      leavingName: "SLK 3",
+    });
   });
 
   it("hay una variable no básica con costo reducido 0 y se avisa que existen soluciones alternativas", () => {
     const last = result.trace[result.trace.length - 1]!.tableau;
     const nonBasicZero = last.columns
       .map((col, j) => ({ col, j }))
-      .filter(({ j }) => !last.basis.includes(j) && last.objectiveRow[j]!.c.isZero() && last.objectiveRow[j]!.m.isZero());
+      .filter(
+        ({ j }) =>
+          !last.basis.includes(j) &&
+          last.objectiveRow[j]!.c.isZero() &&
+          last.objectiveRow[j]!.m.isZero(),
+      );
     expect(nonBasicZero.map(({ col }) => col.name)).toEqual(["SLK 3"]);
     expect(result.flags.alternativeOptima).toBe(true);
     expect(result.messages.join("\n")).toMatch(/alternativ/i);
-    expect(reportCombined(model, result)).toContain("Existen soluciones alternativas");
+    expect(reportCombined(model, result)).toContain(
+      "Existen soluciones alternativas",
+    );
     expect(reportClassic(model, result)).toContain("        1)      8.000000");
   });
 

@@ -79,7 +79,10 @@ describe("LP-01. Óptimo único", () => {
       { name: "X", value: fr("20") },
       { name: "Y", value: fr("60") },
     ]);
-    expect(result.flags).toEqual({ degenerate: false, alternativeOptima: false });
+    expect(result.flags).toEqual({
+      degenerate: false,
+      alternativeOptima: false,
+    });
   });
 
   it("pivotea con Dantzig: entra X y sale SLK 4, entra Y y sale SLK 2, entra SLK 4 y sale SLK 3", () => {
@@ -110,9 +113,19 @@ describe("LP-01. Óptimo único", () => {
     const last = result.trace[3]!.tableau;
     expect(last.objectiveValue.c).toEqual(fr("180"));
     expect(last.objectiveValue.m.isZero()).toBe(true);
-    expect(last.basis.map((col) => last.columns[col]!.name)).toEqual(["Y", "SLK 4", "X"]);
+    expect(last.basis.map((col) => last.columns[col]!.name)).toEqual([
+      "Y",
+      "SLK 4",
+      "X",
+    ]);
     expect(last.rhs).toEqual([fr("60"), fr("20"), fr("20")]);
-    expect(last.objectiveRow.map((v) => v.c)).toEqual([fr("0"), fr("0"), fr("1"), fr("1"), fr("0")]);
+    expect(last.objectiveRow.map((v) => v.c)).toEqual([
+      fr("0"),
+      fr("0"),
+      fr("1"),
+      fr("1"),
+      fr("0"),
+    ]);
   });
 
   it("informa holguras 0, 0, 20 y precios duales 1, 1, 0", () => {
@@ -150,7 +163,10 @@ describe("LP-01. Óptimo único", () => {
       rhsIncrease: finite(fr("20")),
       rhsDecrease: finite(fr("20")),
     });
-    expect(rows[1]).toMatchObject({ rhsMin: finite(fr("60")), rhsMax: finite(fr("100")) });
+    expect(rows[1]).toMatchObject({
+      rhsMin: finite(fr("60")),
+      rhsMax: finite(fr("100")),
+    });
     expect(rows[2]).toMatchObject({
       rhsMin: finite(fr("20")),
       rhsMax: INFINITY,
@@ -164,7 +180,9 @@ describe("LP-01. Óptimo único", () => {
     expect(g.applicable).toBe(true);
     expect(g.status).toBe("optimal");
     expect(g.bounded).toBe(true);
-    expect(g.vertices.map((v) => [v.x.toString(), v.y.toString(), v.z.toString()])).toEqual([
+    expect(
+      g.vertices.map((v) => [v.x.toString(), v.y.toString(), v.z.toString()]),
+    ).toEqual([
       ["0", "0", "0"],
       ["40", "0", "120"],
       ["40", "20", "160"],

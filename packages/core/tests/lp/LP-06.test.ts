@@ -38,7 +38,9 @@ describe("LP-06. Degeneración", () => {
       { name: "Y", value: fr("0") },
     ]);
     const last = result.trace[result.trace.length - 1]!.tableau;
-    const zeroBasics = last.basis.filter((_, i) => last.rhs[i]!.isZero()).map((col) => last.columns[col]!.name);
+    const zeroBasics = last.basis
+      .filter((_, i) => last.rhs[i]!.isZero())
+      .map((col) => last.columns[col]!.name);
     expect(zeroBasics).toEqual(["SLK 4"]);
     expect(result.flags.degenerate).toBe(true);
   });

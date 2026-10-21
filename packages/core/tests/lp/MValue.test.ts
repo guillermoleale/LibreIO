@@ -26,7 +26,11 @@ describe("MValue (coeficientes aM + b del método de la Big M)", () => {
   it("se imprime en decimal con el formateador dado", () => {
     const v = MValue.of(fr("1/2"), fr("1/4"));
     expect(v.format((f) => f.toDecimal(2))).toBe("0.50M + 0.25");
-    expect(MValue.of(fr("-1/2"), fr("-1/4")).format((f) => f.toDecimal(2))).toBe("-0.50M - 0.25");
-    expect(MValue.of(fr("-1"), fr("-1")).format((f) => f.toDecimal(2))).toBe("-M - 1.00");
+    expect(
+      MValue.of(fr("-1/2"), fr("-1/4")).format((f) => f.toDecimal(2)),
+    ).toBe("-0.50M - 0.25");
+    expect(MValue.of(fr("-1"), fr("-1")).format((f) => f.toDecimal(2))).toBe(
+      "-M - 1.00",
+    );
   });
 });
