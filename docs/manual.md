@@ -11,7 +11,7 @@ La idea central del programa es que puedas seguir a mano lo que hace. Cada algor
 - Versión web, sin instalar nada: https://guillermoleale.com/LibreIO/. Funciona en la computadora, en el laboratorio de la facultad y en el celular.
 - Versión de escritorio: instaladores para Windows, macOS y Linux en https://github.com/guillermoleale/LibreIO/releases. Para máquinas sin permisos de instalación hay un `.exe` portable de Windows que se ejecuta sin instalar.
 
-Los instaladores no están firmados. En Windows, SmartScreen muestra un aviso: elegí "Más información" y después "Ejecutar de todas formas". En macOS, Gatekeeper bloquea la primera apertura: hacé clic derecho sobre la app y elegí "Abrir", o en Privacidad y seguridad elegí "Abrir de todas formas".
+Los instaladores no están firmados. En Windows, SmartScreen muestra un aviso: elegí "Más información" y después "Ejecutar de todas formas". En macOS, la primera apertura muestra que Apple no puede verificar la app: cerrar el aviso, abrir Ajustes del Sistema, entrar en Privacidad y seguridad, bajar hasta el mensaje sobre LibreIO y elegir "Abrir de todas formas". Si en cambio dice que LibreIO "está dañado", ejecutar en Terminal `xattr -cr /Applications/LibreIO.app` y abrirla de nuevo.
 
 Las dos versiones tienen exactamente las mismas funciones. Lo que resolvés en una lo podés resolver en la otra.
 

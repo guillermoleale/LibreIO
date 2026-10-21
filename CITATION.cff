@@ -6,7 +6,7 @@ authors:
   - family-names: Leale
     given-names: Guillermo
     affiliation: "UTN Facultad Regional Rosario"
-version: 1.6.0
+version: 1.6.1
 date-released: 2026-10-21
 license: GPL-3.0-or-later
 repository-code: "https://github.com/guillermoleale/LibreIO"

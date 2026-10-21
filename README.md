@@ -7,10 +7,24 @@ Cada algoritmo muestra su traza completa (tableaux, pivotes, iteraciones, nodos 
 ## Usar
 
 - Web, sin instalar nada: https://guillermoleale.com/LibreIO/. Después de la primera carga funciona sin conexión
-- Escritorio: instaladores para Windows, macOS y Linux en [Releases](https://github.com/guillermoleale/LibreIO/releases/latest). Para máquinas sin permisos de instalación hay un `.exe` portable de Windows
+- Escritorio: instaladores para Windows, macOS y Linux en [Releases](https://github.com/guillermoleale/LibreIO/releases/latest). Ver la sección Instalar
 - Manual para alumnos: [docs/manual.md](docs/manual.md)
 
-Los instaladores no están firmados. En Windows, SmartScreen muestra un aviso: elegir "Más información" y después "Ejecutar de todas formas". En macOS, Gatekeeper bloquea la primera apertura: clic derecho sobre la app y "Abrir", o en Privacidad y seguridad elegir "Abrir de todas formas".
+## Instalar
+
+Los instaladores no están firmados con certificado de Microsoft ni de Apple, así que el sistema muestra un aviso la primera vez. Es un paso único y no significa que la app esté rota.
+
+**Windows 10 o superior.** Bajar `LibreIO_x.y.z_x64-setup.exe` y ejecutarlo. Si SmartScreen muestra "Windows protegió tu PC", elegir "Más información" y después "Ejecutar de todas formas". En máquinas sin permisos de instalación sirve `LibreIO_x.y.z_portable_x64.exe`, que corre sin instalar.
+
+**macOS 12 o superior.** Bajar `LibreIO_x.y.z_aarch64.dmg` en Mac con chip Apple (M1 o posterior) o `LibreIO_x.y.z_x64.dmg` en Mac con Intel, abrir el `.dmg` y arrastrar LibreIO a Aplicaciones. Al abrirla por primera vez:
+
+1. Aparece un aviso de que Apple no puede verificar la app. Cerrarlo con "Listo".
+2. Abrir Ajustes del Sistema, entrar en Privacidad y seguridad y bajar hasta el mensaje sobre LibreIO.
+3. Elegir "Abrir de todas formas" y confirmar con la contraseña. A partir de ahí abre normal.
+
+Si en cambio el aviso dice que LibreIO "está dañado y no puede abrirse" (pasa con las versiones anteriores a 1.6.1), abrir Terminal, ejecutar `xattr -cr /Applications/LibreIO.app` y abrirla de nuevo.
+
+**Ubuntu 22.04 o superior y otras distribuciones.** `LibreIO_x.y.z_amd64.deb` se instala con `sudo apt install ./LibreIO_x.y.z_amd64.deb`. `LibreIO_x.y.z_amd64.AppImage` no necesita instalación: darle permiso de ejecución con `chmod +x` y ejecutarlo.
 
 ## Qué hace
 

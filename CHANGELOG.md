@@ -2,6 +2,10 @@
 
 Todas las versiones se publican como tags `vX.Y.Z` con instaladores en GitHub Releases y la web en GitHub Pages.
 
+## 1.6.1
+
+- macOS: la app se firma ad hoc en el build, así Gatekeeper deja de mostrarla como "dañada" y se puede autorizar desde Privacidad y seguridad. Instrucciones nuevas en el README, el manual y las notas de cada release, con el comando `xattr` para las descargas anteriores
+
 ## 1.6.0, primera versión estable
 
 - Repositorio público con guía para colaborar, plantillas de issues, política de seguridad y datos de cita
