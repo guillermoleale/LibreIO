@@ -8,3 +8,11 @@ export {
   type IncumbentEvent,
   type PruneReason,
 } from "./branchAndBound";
+export {
+  cutText,
+  gomoryCuts,
+  type GomoryCut,
+  type GomoryIteration,
+  type GomoryOptions,
+  type GomoryResult,
+} from "./gomory";

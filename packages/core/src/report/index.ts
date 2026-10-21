@@ -17,7 +17,11 @@ export {
   type NumberOptions,
 } from "./format";
 export { reportClassicParametric, reportParametric } from "./parametric";
-export { reportClassicInteger, reportCombinedInteger } from "./integer";
+export {
+  reportClassicInteger,
+  reportCombinedInteger,
+  reportGomory,
+} from "./integer";
 export {
   reportAssignment,
   reportTransport,

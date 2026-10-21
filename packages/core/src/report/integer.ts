@@ -2,6 +2,7 @@
 // Reportes de programación entera: clásico (LINDO) y combinado en español con el árbol.
 import type { LPModel } from "../parser/model";
 import type { BBResult } from "../ilp/branchAndBound";
+import { cutText, type GomoryResult } from "../ilp/gomory";
 import { formatLinearExpression } from "../parser/formatLP";
 import { formatObjectiveValue } from "./classic";
 import {
@@ -164,5 +165,67 @@ export function reportCombinedInteger(
       ]),
     ),
   );
+  return `${lines.join("\n")}\n`;
+}
+
+export function reportGomory(
+  model: LPModel,
+  r: GomoryResult,
+  options: NumberOptions = {},
+): string {
+  const number = numberFormatter(options);
+  const names = model.variables.map((v) => v.name);
+  const lines: string[] = ["LibreIO. Cortes de Gomory"];
+  if (model.title) {
+    lines.push(`Problema: ${model.title}`);
+  }
+  lines.push(
+    `Objetivo: ${model.sense === "max" ? "MAX" : "MIN"} ${formatLinearExpression(model.objective, names, number)}`,
+  );
+  lines.push("");
+  if (r.status === "optimal" && r.solution) {
+    lines.push(
+      `Óptimo entero: Z = ${number(r.solution.objective)} con ${r.cuts.length} corte${r.cuts.length === 1 ? "" : "s"}`,
+    );
+    lines.push(
+      r.solution.variables
+        .map((v) => `${v.name} = ${number(v.value)}`)
+        .join(", "),
+    );
+  } else if (r.status === "infeasible") {
+    lines.push("El problema entero es infactible.");
+  } else if (r.status === "unbounded") {
+    lines.push("La relajación lineal es ilimitada.");
+  } else {
+    lines.push(
+      "No se llegó a una solución entera: se alcanzó el límite de cortes o el corte no se pudo expresar.",
+    );
+  }
+  lines.push("");
+  lines.push(
+    textTable(
+      ["Iteración", "Z relajación", "Solución", "Corte generado"],
+      ["r", "r", "l", "l"],
+      r.iterations.map((it) => [
+        String(it.index),
+        it.lp.solution ? number(it.lp.solution.objective) : "-",
+        it.solution.map((v) => `${v.name} = ${number(v.value)}`).join(", "),
+        it.cut
+          ? `Corte ${it.cut.index} (fila de ${it.cut.sourceVariable}): ${cutText(model, it.cut, number)}`
+          : it.integer
+            ? "solución entera"
+            : "-",
+      ]),
+    ),
+  );
+  if (r.cuts.length > 0) {
+    lines.push("", "Partes fraccionarias de la fila fuente de cada corte");
+    for (const cut of r.cuts) {
+      lines.push(
+        `Corte ${cut.index}: ${cut.tableauRow.names.map((name, i) => `${number(cut.tableauRow.coefficients[i]!)} ${name}`).join(" + ")} >= ${number(cut.tableauRow.rhs)}`,
+      );
+    }
+  }
+  lines.push("", ...r.messages);
   return `${lines.join("\n")}\n`;
 }
