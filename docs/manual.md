@@ -36,6 +36,10 @@ Los botones "Abrir" y "Guardar" leen y escriben archivos de texto:
 
 En la versión web, "Abrir" usa el selector de archivos del navegador y "Guardar" descarga el archivo. En la de escritorio se abren los diálogos del sistema.
 
+### Copiar y exportar reportes
+
+Cada módulo muestra su reporte en texto monoespaciado con tres botones: Copiar (al portapapeles), Exportar .txt y Exportar .md (el mismo texto dentro de un bloque de código de Markdown, listo para pegar en un informe). En cualquier módulo, Ctrl+Enter resuelve el problema cargado.
+
 ## 2. Programación lineal
 
 ### 2.1 El lenguaje de modelos

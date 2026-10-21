@@ -1,6 +1,6 @@
 [package]
 name = "libreio"
-version = "1.5.0"
+version = "1.5.1"
 description = "Software libre y didáctico de Investigación Operativa"
 authors = ["Cátedra de Investigación Operativa, UTN FRRo"]
 license = "GPL-3.0-or-later"
