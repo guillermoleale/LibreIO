@@ -256,7 +256,7 @@ Los valores corresponden al caso LP-01 del apéndice A, verificados a mano. Este
 Las fases 0 y 1 se ejecutan de corrido y terminan con `v1.0.0` publicada. Cada fase cierra con sus casos de aceptación del apéndice A en verde, CI en verde en las tres plataformas y un tag.
 
 - [x] Fase 0. Esqueleto: monorepo, `Fraction`, parser, UI vacía con un módulo de prueba, build de Tauri en las tres plataformas y deploy web en CI. Casos LP-07
-- [ ] Fase 1. Programación lineal: simplex, dos fases, Big M, pivoteo manual, sensibilidad, dual, reporte combinado y clásico, tableau clásico, método gráfico. Reemplaza a GLP y LINDO. Casos LP-01 a LP-08 y UI-01 a UI-03. Tag `v1.0.0`
+- [X] Fase 1. Programación lineal: simplex, dos fases, Big M, pivoteo manual, sensibilidad, dual, reporte combinado y clásico, tableau clásico, método gráfico. Reemplaza a GLP y LINDO. Casos LP-01 a LP-08 y UI-01 a UI-03. Tag `v1.0.0`
 - [ ] Fase 2. Paramétrico, entera, transporte, transbordo y asignación. Casos LP-09, LP-10, ILP-01, TR-01 a TR-03, AS-01
 - [ ] Fase 3. Redes, viajante y PERT/CPM con compresión. Casos NET-01 a NET-04, PERT-01 a PERT-03
 - [ ] Fase 4. Colas, inventarios y decisiones. Casos Q-01 a Q-04, INV-01 a INV-03, DEC-01 a DEC-03
