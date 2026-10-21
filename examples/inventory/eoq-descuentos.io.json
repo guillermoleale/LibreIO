@@ -1,0 +1,12 @@
+{
+  "type": "inventory",
+  "title": "EOQ con descuentos por cantidad",
+  "model": "eoq",
+  "demand": 1200,
+  "orderCost": 100,
+  "holdingRate": "1/5",
+  "priceBreaks": [
+    { "minQuantity": 0, "unitCost": 5 },
+    { "minQuantity": 500, "unitCost": 4.5 }
+  ]
+}

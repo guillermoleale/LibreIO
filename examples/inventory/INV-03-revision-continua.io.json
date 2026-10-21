@@ -1,0 +1,10 @@
+{
+  "type": "inventory",
+  "title": "INV-03 Revisión continua",
+  "model": "continuousReview",
+  "demand": 1200,
+  "orderQuantity": 200,
+  "leadTime": "1/12",
+  "leadTimeDemand": { "mean": 100, "sd": 20 },
+  "serviceLevel": 0.95
+}

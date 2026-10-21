@@ -1,0 +1,8 @@
+{
+  "type": "queue",
+  "title": "M/M/1/K con capacidad 3",
+  "kind": "MM1K",
+  "lambda": 2,
+  "mu": 3,
+  "capacity": 3
+}

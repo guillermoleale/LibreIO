@@ -1,0 +1,10 @@
+{
+  "type": "game",
+  "title": "DEC-02 Juego con estrategias mixtas",
+  "rows": ["F1", "F2"],
+  "columns": ["C1", "C2"],
+  "matrix": [
+    [3, -1],
+    [-2, 2]
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "type": "game",
+  "title": "Piedra, papel o tijera",
+  "rows": ["Piedra", "Papel", "Tijera"],
+  "columns": ["Piedra", "Papel", "Tijera"],
+  "matrix": [
+    [0, -1, 1],
+    [1, 0, -1],
+    [-1, 1, 0]
+  ]
+}

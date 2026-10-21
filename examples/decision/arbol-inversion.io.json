@@ -1,0 +1,28 @@
+{
+  "type": "tree",
+  "title": "Invertir o no invertir",
+  "sense": "max",
+  "root": "r",
+  "nodes": [
+    {
+      "id": "r",
+      "kind": "decision",
+      "label": "Invertir",
+      "branches": [
+        { "to": "c", "label": "Invertir", "payoff": -10 },
+        { "to": "t0", "label": "No invertir" }
+      ]
+    },
+    {
+      "id": "c",
+      "kind": "chance",
+      "label": "Resultado",
+      "branches": [
+        { "to": "t50", "label": "Éxito", "probability": 0.5 },
+        { "to": "t0", "label": "Fracaso", "probability": 0.5 }
+      ]
+    },
+    { "id": "t50", "kind": "terminal", "payoff": 50 },
+    { "id": "t0", "kind": "terminal", "payoff": 0 }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "type": "queue",
+  "title": "M/M/2 con población finita de 5 máquinas",
+  "kind": "MMsN",
+  "lambda": "1/2",
+  "mu": 3,
+  "servers": 2,
+  "population": 5,
+  "costs": { "serverCost": 20, "waitingCost": 50 }
+}

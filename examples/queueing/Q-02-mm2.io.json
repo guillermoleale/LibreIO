@@ -1,0 +1,9 @@
+{
+  "type": "queue",
+  "title": "Q-02 M/M/2",
+  "kind": "MMs",
+  "lambda": 2,
+  "mu": 3,
+  "servers": 2,
+  "costs": { "serverCost": 10, "waitingCost": 30 }
+}

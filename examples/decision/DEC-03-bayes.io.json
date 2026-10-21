@@ -1,0 +1,16 @@
+{
+  "type": "bayes",
+  "title": "DEC-03 Revisión bayesiana",
+  "states": ["S1", "S2"],
+  "priors": [0.6, 0.4],
+  "alternatives": ["A1", "A2"],
+  "payoffs": [
+    [100, -50],
+    [20, 20]
+  ],
+  "indicators": ["I1", "I2"],
+  "likelihoods": [
+    [0.8, 0.2],
+    [0.3, 0.7]
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "type": "inventory",
+  "title": "INV-01 EOQ",
+  "model": "eoq",
+  "demand": 1200,
+  "orderCost": 100,
+  "holdingCost": 6,
+  "leadTime": "1/12"
+}

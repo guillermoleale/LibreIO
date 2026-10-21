@@ -1,0 +1,9 @@
+{
+  "type": "inventory",
+  "title": "EOQ con faltantes admitidos",
+  "model": "eoq",
+  "demand": 1200,
+  "orderCost": 100,
+  "holdingCost": 6,
+  "shortageCost": 18
+}

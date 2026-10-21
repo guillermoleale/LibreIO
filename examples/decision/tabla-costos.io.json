@@ -1,0 +1,14 @@
+{
+  "type": "payoff",
+  "title": "Tabla de costos de mantenimiento",
+  "sense": "min",
+  "alternatives": ["Reparar", "Reemplazar", "Esperar"],
+  "states": ["Falla leve", "Falla grave"],
+  "probabilities": [0.7, 0.3],
+  "alpha": 0.5,
+  "payoffs": [
+    [200, 800],
+    [500, 500],
+    [0, 1500]
+  ]
+}

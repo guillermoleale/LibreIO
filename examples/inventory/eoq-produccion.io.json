@@ -1,0 +1,9 @@
+{
+  "type": "inventory",
+  "title": "EOQ con tasa de producción finita",
+  "model": "eoq",
+  "demand": 1200,
+  "orderCost": 100,
+  "holdingCost": 6,
+  "productionRate": 3600
+}

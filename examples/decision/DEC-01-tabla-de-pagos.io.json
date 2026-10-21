@@ -1,0 +1,14 @@
+{
+  "type": "payoff",
+  "title": "DEC-01 Tabla de pagos",
+  "sense": "max",
+  "alternatives": ["A1", "A2", "A3"],
+  "states": ["S1", "S2", "S3"],
+  "probabilities": [0.3, 0.5, 0.2],
+  "alpha": 0.6,
+  "payoffs": [
+    [50, 40, 30],
+    [80, 20, 10],
+    [60, 50, 5]
+  ]
+}

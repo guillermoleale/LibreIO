@@ -7,3 +7,6 @@ export * from "./ilp";
 export * from "./transport";
 export * from "./network";
 export * from "./pert";
+export * from "./queueing";
+export * from "./inventory";
+export * from "./decision";

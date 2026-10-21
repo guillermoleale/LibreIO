@@ -1,0 +1,13 @@
+{
+  "type": "inventory",
+  "title": "Una sola compra con demanda discreta",
+  "model": "newsvendor",
+  "cost": 4,
+  "price": 10,
+  "salvage": 2,
+  "demand": {
+    "kind": "discrete",
+    "values": [100, 150, 200, 250],
+    "probabilities": [0.2, 0.4, 0.3, 0.1]
+  }
+}

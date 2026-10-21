@@ -30,3 +30,20 @@ export {
   reportTravelingSalesman,
 } from "./network";
 export { reportCpm, reportCrashing, reportPert } from "./pert";
+export {
+  QUEUE_KIND_NAMES,
+  describeQueue,
+  reportCapacity,
+  reportQueue,
+} from "./queueing";
+export {
+  reportContinuousReview,
+  reportEoq,
+  reportNewsvendor,
+} from "./inventory";
+export {
+  reportBayes,
+  reportDecisionTree,
+  reportGame,
+  reportPayoff,
+} from "./decision";

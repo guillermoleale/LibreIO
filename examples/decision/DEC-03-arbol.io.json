@@ -1,0 +1,85 @@
+{
+  "type": "tree",
+  "title": "DEC-03 como árbol de decisión",
+  "sense": "max",
+  "root": "raiz",
+  "nodes": [
+    {
+      "id": "raiz",
+      "kind": "decision",
+      "label": "Muestrear",
+      "branches": [
+        { "to": "sinInfo", "label": "Sin información" },
+        { "to": "conInfo", "label": "Con información" }
+      ]
+    },
+    {
+      "id": "sinInfo",
+      "kind": "decision",
+      "label": "Decisión",
+      "branches": [
+        { "to": "a1", "label": "A1" },
+        { "to": "a2", "label": "A2" }
+      ]
+    },
+    {
+      "id": "a1",
+      "kind": "chance",
+      "label": "Estado",
+      "branches": [
+        { "to": "t100", "label": "S1", "probability": 0.6 },
+        { "to": "tm50", "label": "S2", "probability": 0.4 }
+      ]
+    },
+    { "id": "a2", "kind": "terminal", "payoff": 20 },
+    { "id": "t100", "kind": "terminal", "payoff": 100 },
+    { "id": "tm50", "kind": "terminal", "payoff": -50 },
+    {
+      "id": "conInfo",
+      "kind": "chance",
+      "label": "Indicador",
+      "branches": [
+        { "to": "d1", "label": "I1", "probability": 0.6 },
+        { "to": "d2", "label": "I2", "probability": 0.4 }
+      ]
+    },
+    {
+      "id": "d1",
+      "kind": "decision",
+      "label": "Decisión dado I1",
+      "branches": [
+        { "to": "a1i1", "label": "A1" },
+        { "to": "a2b", "label": "A2" }
+      ]
+    },
+    {
+      "id": "a1i1",
+      "kind": "chance",
+      "label": "Estado",
+      "branches": [
+        { "to": "t100", "label": "S1", "probability": 0.8 },
+        { "to": "tm50", "label": "S2", "probability": 0.2 }
+      ]
+    },
+    { "id": "a2b", "kind": "terminal", "payoff": 20 },
+    {
+      "id": "d2",
+      "kind": "decision",
+      "label": "Decisión dado I2",
+      "branches": [
+        { "to": "a1i2", "label": "A1" },
+        { "to": "a2c", "label": "A2" }
+      ]
+    },
+    {
+      "id": "a1i2",
+      "kind": "chance",
+      "label": "Estado",
+      "branches": [
+        { "to": "t100", "label": "S1", "probability": 0.3 },
+        { "to": "tm50", "label": "S2", "probability": 0.7 }
+      ]
+    },
+    { "id": "a2c", "kind": "terminal", "payoff": 20 }
+  ]
+}
