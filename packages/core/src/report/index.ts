@@ -23,3 +23,10 @@ export {
   reportTransport,
   reportTransshipment,
 } from "./transport";
+export {
+  reportMaxFlow,
+  reportShortestPath,
+  reportSpanningTree,
+  reportTravelingSalesman,
+} from "./network";
+export { reportCpm, reportCrashing, reportPert } from "./pert";
