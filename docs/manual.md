@@ -17,7 +17,7 @@ Las dos versiones tienen exactamente las mismas funciones. Lo que resolvés en u
 
 ### 1.2 La pantalla
 
-La barra lateral de la izquierda lista los módulos: Programación lineal, Transporte y asignación, Redes, PERT/CPM, Colas, Inventarios, Decisiones, Programación dinámica y Markov. El área de trabajo tiene dos paneles: a la izquierda cargás el modelo y a la derecha ves los resultados en pestañas. En el celular los paneles se apilan.
+La barra lateral de la izquierda lista los módulos: Programación lineal y entera, Transporte y asignación, Redes, PERT/CPM, Colas, Inventarios, Decisiones, Programación dinámica y Markov. El área de trabajo tiene dos paneles: a la izquierda cargás el modelo y a la derecha ves los resultados en pestañas. En el celular los paneles se apilan.
 
 Abajo de cada panel de modelo hay opciones. La más usada es "Números": por defecto todo se muestra en fracciones exactas (por ejemplo `3/2`) y podés pasar a decimales. Los decimales son solo una forma de ver el mismo número: el programa calcula siempre con fracciones, así que `1/3` es `1/3` y no `0.3333`.
 

@@ -2,6 +2,12 @@
 
 Todas las versiones se publican como tags `vX.Y.Z` con instaladores en GitHub Releases y la web en GitHub Pages.
 
+## 1.6.0, primera versión estable
+
+- Repositorio público con guía para colaborar, plantillas de issues, política de seguridad y datos de cita
+- El menú lateral ya no muestra "Programación entera" como pendiente: la programación entera está dentro de Programación lineal y entera
+- README reorganizado por módulos; el historial de versiones queda en este archivo
+
 ## 1.5.1
 
 - Todos los módulos exportan su reporte a `.txt` y `.md` y lo copian al portapapeles

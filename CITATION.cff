@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "Si usás este software, citalo con estos datos."
+title: "LibreIO: software libre y didáctico de Investigación Operativa"
+type: software
+authors:
+  - family-names: Leale
+    given-names: Guillermo
+    affiliation: "UTN Facultad Regional Rosario"
+version: 1.6.0
+date-released: 2026-10-21
+license: GPL-3.0-or-later
+repository-code: "https://github.com/guillermoleale/LibreIO"
+url: "https://guillermoleale.com/LibreIO/"
+keywords:
+  - investigación operativa
+  - programación lineal
+  - simplex
+  - software educativo
