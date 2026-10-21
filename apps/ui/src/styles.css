@@ -1027,3 +1027,160 @@ input.short {
   outline: 2px solid var(--ok);
   outline-offset: -2px;
 }
+
+/* Redes */
+.graph-scroll {
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  margin-bottom: 10px;
+}
+
+.network .net-arc path {
+  stroke: var(--muted);
+  stroke-width: 1.6;
+}
+
+.network .net-arc.solution path {
+  stroke: var(--ok);
+  stroke-width: 3.5;
+}
+
+.network .net-arc.flow path {
+  stroke: var(--accent);
+  stroke-width: 2.4;
+}
+
+.network .net-arc.solution.flow path {
+  stroke: var(--ok);
+}
+
+.network .net-arc.current path {
+  stroke: var(--warn);
+}
+
+.network .net-arc.rejected path {
+  stroke: var(--error);
+  stroke-dasharray: 6 4;
+  stroke-width: 2.4;
+}
+
+.network .net-arc.cut path {
+  stroke: var(--error);
+  stroke-dasharray: 8 4;
+  stroke-width: 2.6;
+}
+
+.network .net-arc-label {
+  fill: var(--text);
+  paint-order: stroke;
+  stroke: var(--surface);
+  stroke-width: 3px;
+}
+
+.network .net-node circle {
+  fill: var(--surface-2);
+  stroke: var(--text);
+  stroke-width: 1.5;
+}
+
+.network .net-node text {
+  fill: var(--text);
+}
+
+.network .net-node.permanent circle {
+  fill: color-mix(in srgb, var(--ok) 25%, var(--surface));
+}
+
+.network .net-node.temporary circle {
+  fill: color-mix(in srgb, var(--warn) 25%, var(--surface));
+}
+
+.network .net-node.settled circle {
+  stroke: var(--accent);
+  stroke-width: 3.5;
+}
+
+.network .net-node.source-side circle {
+  fill: color-mix(in srgb, var(--accent) 25%, var(--surface));
+}
+
+.network .net-node.sink-side circle {
+  fill: color-mix(in srgb, var(--error) 20%, var(--surface));
+}
+
+.network .net-node-label {
+  fill: var(--accent);
+  font-weight: 600;
+}
+
+/* PERT/CPM */
+.aon .aon-node rect {
+  fill: var(--surface-2);
+  stroke: var(--border);
+  stroke-width: 1.5;
+}
+
+.aon .aon-node line {
+  stroke: var(--border);
+}
+
+.aon .aon-node text {
+  fill: var(--text);
+}
+
+.aon .aon-node text.muted {
+  fill: var(--muted);
+}
+
+.aon .aon-node.critical rect {
+  stroke: var(--error);
+  stroke-width: 2.5;
+  fill: color-mix(in srgb, var(--error) 10%, var(--surface));
+}
+
+.aon .aon-edge {
+  stroke: var(--muted);
+  stroke-width: 1.6;
+}
+
+.aon .aon-edge.critical {
+  stroke: var(--error);
+  stroke-width: 3;
+}
+
+.gantt .gantt-grid {
+  stroke: var(--border);
+}
+
+.gantt .muted {
+  fill: var(--muted);
+}
+
+.gantt text {
+  fill: var(--text);
+}
+
+.gantt .gantt-bar {
+  fill: var(--accent);
+}
+
+.gantt .gantt-bar.critical {
+  fill: var(--error);
+}
+
+.gantt .gantt-slack {
+  fill: var(--muted);
+  opacity: 0.35;
+}
+
+.gantt .gantt-text {
+  fill: var(--accent-text);
+}
+
+tr.critical-row th,
+tr.critical-row td {
+  color: var(--error);
+  font-weight: 600;
+}

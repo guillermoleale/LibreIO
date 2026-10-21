@@ -60,3 +60,34 @@ export const transportExamples: readonly Example[] = Object.entries(
     return { id, name: jsonTitle(text, id), text };
   })
   .sort((a, b) => a.id.localeCompare(b.id, "es"));
+
+function jsonExamples(
+  files: Record<string, string>,
+  extension: RegExp,
+): readonly Example[] {
+  return Object.entries(files)
+    .map(([path, text]) => {
+      const file = path.split("/").pop() ?? path;
+      const id = file.replace(extension, "");
+      return { id, name: jsonTitle(text, id), text };
+    })
+    .sort((a, b) => a.id.localeCompare(b.id, "es"));
+}
+
+export const networkExamples: readonly Example[] = jsonExamples(
+  import.meta.glob("../../../../examples/network/*.io.json", {
+    query: "?raw",
+    import: "default",
+    eager: true,
+  }) as Record<string, string>,
+  /\.io\.json$/,
+);
+
+export const projectExamples: readonly Example[] = jsonExamples(
+  import.meta.glob("../../../../examples/project/*.io.json", {
+    query: "?raw",
+    import: "default",
+    eager: true,
+  }) as Record<string, string>,
+  /\.io\.json$/,
+);

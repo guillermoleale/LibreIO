@@ -6,6 +6,8 @@ import { Sidebar } from "./common/Sidebar";
 import { useTheme } from "./common/theme";
 import { t } from "./i18n";
 import { LPModule } from "./lp/LPModule";
+import { NetworkModule } from "./network/NetworkModule";
+import { PertModule } from "./pert/PertModule";
 import { TransportModule } from "./transport/TransportModule";
 
 export function App() {
@@ -28,6 +30,10 @@ export function App() {
           <About />
         ) : view === "transport" ? (
           <TransportModule />
+        ) : view === "network" ? (
+          <NetworkModule />
+        ) : view === "pert" ? (
+          <PertModule />
         ) : (
           <LPModule />
         )}
