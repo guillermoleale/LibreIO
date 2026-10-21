@@ -12,6 +12,7 @@ import {
 import {
   Fraction,
   formatLP,
+  formatLinearExpression,
   graphicalAnalysis,
   solveLP,
   type GraphicalAnalysis,
@@ -375,7 +376,7 @@ export function GraphTab({
             markerHeight="8"
             orient="auto-start-reverse"
           >
-            <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--error)" />
           </marker>
           <clipPath id="plot-area">
             <rect x={PAD} y={PAD} width={W - 2 * PAD} height={H - 2 * PAD} />
@@ -457,7 +458,7 @@ export function GraphTab({
                   x={sx(seg[1].x) - 6}
                   y={sy(seg[1].y) - 6}
                   fill={color}
-                  fontSize={12}
+                  fontSize={14}
                   textAnchor="end"
                   style={{ pointerEvents: "none" }}
                 >
@@ -687,12 +688,12 @@ export function GraphTab({
                   style={{ background: COLORS[i % COLORS.length] }}
                 />
                 {line.name}:{" "}
-                {formatLP(
-                  { ...model, constraints: [model.constraints[i]!] },
-                  { number },
-                )
-                  .split("\n")[2]
-                  ?.trim()}
+                {formatLinearExpression(
+                  model.constraints[i]!.coefficients,
+                  model.variables.map((v) => v.name),
+                  number,
+                )}{" "}
+                {line.relation} {number(model.constraints[i]!.rhs)}
               </li>
             ))}
           </ul>

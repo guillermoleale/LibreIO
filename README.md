@@ -9,6 +9,19 @@ Software libre y didáctico de Investigación Operativa para la cátedra de la U
 
 Los instaladores no están firmados. En Windows, SmartScreen muestra un aviso: elegir "Más información" y después "Ejecutar de todas formas". En macOS, Gatekeeper bloquea la primera apertura: clic derecho sobre la app y "Abrir", o en Privacidad y seguridad elegir "Abrir de todas formas".
 
+## Qué hace la versión 1.0
+
+Programación lineal, que reemplaza a GLP y LINDO:
+
+- Lenguaje de modelos compatible con LINDO, con errores en español y número de línea
+- Simplex tableau con dos fases o Big M (M simbólica), regla de Dantzig o Bland, y traza completa: cada tableau con la variable que entra, la que sale, el pivote y las razones mínimas
+- Modo guiado: el alumno elige la variable que entra y opcionalmente la que sale, y el programa valida la elección
+- Detección de óptimo, ilimitado, infactible, óptimos alternativos y degeneración, con mensajes explicativos
+- Sensibilidad: costos reducidos, precios sombra y duales, rangos de coeficientes y de lado derecho. Formulación y solución del dual
+- Reporte combinado en español con las columnas de WinQSB y reporte clásico de LINDO en inglés, exportables a `.txt` y `.md`
+- Método gráfico para dos variables con región factible, vértices exactos, recta de Z desplazable, zoom, arrastre del lado derecho de una restricción y exportación a SVG y PNG
+- Aritmética exacta con fracciones y vista decimal opcional
+
 ## Modelos
 
 Los modelos se escriben en el formato de LINDO clásico, así que las guías de ejercicios existentes sirven tal cual:
