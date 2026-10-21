@@ -30,6 +30,11 @@ Programación lineal, que reemplaza a GLP y LINDO:
 - Transbordo reducido a transporte con buffer y asignación por el método húngaro con cada reducción y cobertura
 - Entrada tabular estilo WinQSB sincronizada con el texto y archivos `.io.json` para los módulos no lineales
 
+## Qué agrega la versión 1.2
+
+- Redes: camino mínimo con Dijkstra y traza de etiquetas, flujo máximo con caminos de aumento y corte mínimo, árbol de expansión mínima por Kruskal y Prim, y viajante exacto hasta 10 nodos con vecino más cercano e inserción más barata como comparación. Grafo dibujado por capas con la solución resaltada paso a paso
+- PERT/CPM: tiempos tempranos y tardíos, holguras total y libre, caminos críticos, PERT con tres estimaciones y probabilidades, compresión al mínimo costo con curva de costo contra duración, red de actividades en nodos y Gantt
+
 ## Modelos
 
 Los modelos se escriben en el formato de LINDO clásico, así que las guías de ejercicios existentes sirven tal cual:

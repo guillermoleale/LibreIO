@@ -56,3 +56,14 @@ Todo el núcleo trabaja con `Fraction` sobre `BigInt`. Los decimales de la entra
 - Las celdas básicas forman un árbol generador del grafo bipartito filas-columnas. Los potenciales se obtienen recorriéndolo desde `u_1 = 0`; el ciclo de una celda no básica es el camino en el árbol entre su fila y su columna más la celda.
 - La sensibilidad de un costo básico se deduce de los ciclos de las celdas no básicas que pasan por él: con signo menos limita el aumento, con signo más la disminución.
 - El húngaro calcula la cobertura mínima con König sobre el emparejamiento máximo de ceros, lo que garantiza que la cantidad de líneas sea la mínima en cada paso.
+
+## Redes
+
+- Dijkstra guarda en cada iteración la foto de todas las etiquetas (distancia, predecesor, permanente o temporal) para que la interfaz las muestre sobre el grafo.
+- El flujo máximo trabaja sobre capacidades agregadas por par ordenado; los arcos paralelos reparten el flujo en proporción a su capacidad al informar.
+- El viajante exacto es una búsqueda en profundidad con cota; para 10 nodos explora algunos miles de nodos en el peor caso. Held Karp sería más rápido pero no deja una traza que el alumno pueda seguir.
+
+## PERT/CPM
+
+- Los caminos críticos se obtienen recorriendo solo actividades con holgura total cero y exigiendo que el fin temprano de una coincida con el inicio temprano de la siguiente, para no mezclar actividades críticas de caminos distintos.
+- La compresión es el programa lineal clásico de Hillier y Lieberman resuelto con el simplex exacto del núcleo, así el costo de cada duración es exacto y considera todos los caminos.
