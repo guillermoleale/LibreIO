@@ -1,0 +1,41 @@
+{
+  "type": "project",
+  "title": "PERT-02 PERT",
+  "activities": [
+    {
+      "id": "A",
+      "predecessors": [],
+      "optimistic": 2,
+      "mostLikely": 3,
+      "pessimistic": 4
+    },
+    {
+      "id": "B",
+      "predecessors": [],
+      "optimistic": 1,
+      "mostLikely": 2,
+      "pessimistic": 3
+    },
+    {
+      "id": "C",
+      "predecessors": ["A"],
+      "optimistic": 2,
+      "mostLikely": 4,
+      "pessimistic": 6
+    },
+    {
+      "id": "D",
+      "predecessors": ["B"],
+      "optimistic": 1,
+      "mostLikely": 1,
+      "pessimistic": 1
+    },
+    {
+      "id": "E",
+      "predecessors": ["C", "D"],
+      "optimistic": 1,
+      "mostLikely": 2,
+      "pessimistic": 3
+    }
+  ]
+}

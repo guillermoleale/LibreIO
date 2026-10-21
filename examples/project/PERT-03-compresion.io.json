@@ -1,0 +1,29 @@
+{
+  "type": "project",
+  "title": "PERT-03 Compresión",
+  "activities": [
+    {
+      "id": "A",
+      "predecessors": [],
+      "duration": 3,
+      "crashDuration": 2,
+      "crashCostPerUnit": 50
+    },
+    { "id": "B", "predecessors": [], "duration": 2 },
+    {
+      "id": "C",
+      "predecessors": ["A"],
+      "duration": 4,
+      "crashDuration": 3,
+      "crashCostPerUnit": 30
+    },
+    { "id": "D", "predecessors": ["B"], "duration": 1 },
+    {
+      "id": "E",
+      "predecessors": ["C", "D"],
+      "duration": 2,
+      "crashDuration": 1,
+      "crashCostPerUnit": 80
+    }
+  ]
+}

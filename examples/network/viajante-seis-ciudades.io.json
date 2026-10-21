@@ -1,0 +1,30 @@
+{
+  "type": "network",
+  "title": "Viajante con seis ciudades",
+  "directed": false,
+  "nodes": [
+    "Rosario",
+    "Santa Fe",
+    "Paraná",
+    "Córdoba",
+    "Venado Tuerto",
+    "Rafaela"
+  ],
+  "arcs": [
+    { "from": "Rosario", "to": "Santa Fe", "weight": 170 },
+    { "from": "Rosario", "to": "Paraná", "weight": 190 },
+    { "from": "Rosario", "to": "Córdoba", "weight": 400 },
+    { "from": "Rosario", "to": "Venado Tuerto", "weight": 160 },
+    { "from": "Rosario", "to": "Rafaela", "weight": 260 },
+    { "from": "Santa Fe", "to": "Paraná", "weight": 30 },
+    { "from": "Santa Fe", "to": "Córdoba", "weight": 340 },
+    { "from": "Santa Fe", "to": "Venado Tuerto", "weight": 330 },
+    { "from": "Santa Fe", "to": "Rafaela", "weight": 100 },
+    { "from": "Paraná", "to": "Córdoba", "weight": 370 },
+    { "from": "Paraná", "to": "Venado Tuerto", "weight": 350 },
+    { "from": "Paraná", "to": "Rafaela", "weight": 130 },
+    { "from": "Córdoba", "to": "Venado Tuerto", "weight": 300 },
+    { "from": "Córdoba", "to": "Rafaela", "weight": 290 },
+    { "from": "Venado Tuerto", "to": "Rafaela", "weight": 390 }
+  ]
+}

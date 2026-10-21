@@ -1,0 +1,132 @@
+{
+  "type": "project",
+  "title": "Construcción de una casa (Hillier, Reliable Construction)",
+  "activities": [
+    {
+      "id": "A",
+      "name": "Excavar",
+      "predecessors": [],
+      "duration": 2,
+      "optimistic": 1,
+      "mostLikely": 2,
+      "pessimistic": 3
+    },
+    {
+      "id": "B",
+      "name": "Cimientos",
+      "predecessors": ["A"],
+      "duration": 4,
+      "optimistic": 2,
+      "mostLikely": 3.5,
+      "pessimistic": 8
+    },
+    {
+      "id": "C",
+      "name": "Paredes",
+      "predecessors": ["B"],
+      "duration": 10,
+      "optimistic": 6,
+      "mostLikely": 9,
+      "pessimistic": 18
+    },
+    {
+      "id": "D",
+      "name": "Techo",
+      "predecessors": ["C"],
+      "duration": 6,
+      "optimistic": 4,
+      "mostLikely": 5.5,
+      "pessimistic": 10
+    },
+    {
+      "id": "E",
+      "name": "Plomería exterior",
+      "predecessors": ["C"],
+      "duration": 4,
+      "optimistic": 1,
+      "mostLikely": 4.5,
+      "pessimistic": 5
+    },
+    {
+      "id": "F",
+      "name": "Plomería interior",
+      "predecessors": ["E"],
+      "duration": 5,
+      "optimistic": 4,
+      "mostLikely": 4,
+      "pessimistic": 10
+    },
+    {
+      "id": "G",
+      "name": "Revestimiento",
+      "predecessors": ["D"],
+      "duration": 7,
+      "optimistic": 5,
+      "mostLikely": 6.5,
+      "pessimistic": 11
+    },
+    {
+      "id": "H",
+      "name": "Pintura exterior",
+      "predecessors": ["E", "G"],
+      "duration": 9,
+      "optimistic": 5,
+      "mostLikely": 8,
+      "pessimistic": 17
+    },
+    {
+      "id": "I",
+      "name": "Electricidad",
+      "predecessors": ["C"],
+      "duration": 7,
+      "optimistic": 3,
+      "mostLikely": 7.5,
+      "pessimistic": 9
+    },
+    {
+      "id": "J",
+      "name": "Paneles",
+      "predecessors": ["F", "I"],
+      "duration": 8,
+      "optimistic": 3,
+      "mostLikely": 9,
+      "pessimistic": 9
+    },
+    {
+      "id": "K",
+      "name": "Pisos",
+      "predecessors": ["J"],
+      "duration": 4,
+      "optimistic": 4,
+      "mostLikely": 4,
+      "pessimistic": 4
+    },
+    {
+      "id": "L",
+      "name": "Pintura interior",
+      "predecessors": ["J"],
+      "duration": 5,
+      "optimistic": 1,
+      "mostLikely": 5.5,
+      "pessimistic": 7
+    },
+    {
+      "id": "M",
+      "name": "Accesorios exteriores",
+      "predecessors": ["H"],
+      "duration": 2,
+      "optimistic": 1,
+      "mostLikely": 2,
+      "pessimistic": 3
+    },
+    {
+      "id": "N",
+      "name": "Accesorios interiores",
+      "predecessors": ["K", "L"],
+      "duration": 6,
+      "optimistic": 5,
+      "mostLikely": 5.5,
+      "pessimistic": 9
+    }
+  ]
+}

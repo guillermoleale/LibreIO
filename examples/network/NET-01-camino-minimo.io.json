@@ -1,0 +1,15 @@
+{
+  "type": "network",
+  "title": "NET-01 Camino mínimo",
+  "directed": false,
+  "nodes": ["1", "2", "3", "4", "5"],
+  "arcs": [
+    { "from": "1", "to": "2", "weight": 2 },
+    { "from": "1", "to": "3", "weight": 5 },
+    { "from": "2", "to": "3", "weight": 2 },
+    { "from": "2", "to": "4", "weight": 6 },
+    { "from": "3", "to": "4", "weight": 1 },
+    { "from": "3", "to": "5", "weight": 7 },
+    { "from": "4", "to": "5", "weight": 2 }
+  ]
+}

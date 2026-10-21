@@ -1,0 +1,11 @@
+{
+  "type": "project",
+  "title": "PERT-01 CPM",
+  "activities": [
+    { "id": "A", "predecessors": [], "duration": 3 },
+    { "id": "B", "predecessors": [], "duration": 2 },
+    { "id": "C", "predecessors": ["A"], "duration": 4 },
+    { "id": "D", "predecessors": ["B"], "duration": 1 },
+    { "id": "E", "predecessors": ["C", "D"], "duration": 2 }
+  ]
+}

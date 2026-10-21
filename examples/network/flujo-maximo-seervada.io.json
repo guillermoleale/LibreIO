@@ -1,0 +1,20 @@
+{
+  "type": "network",
+  "title": "Flujo máximo (Hillier, Seervada Park)",
+  "directed": true,
+  "nodes": ["O", "A", "B", "C", "D", "E", "T"],
+  "arcs": [
+    { "from": "O", "to": "A", "weight": 5 },
+    { "from": "O", "to": "B", "weight": 7 },
+    { "from": "O", "to": "C", "weight": 4 },
+    { "from": "A", "to": "B", "weight": 1 },
+    { "from": "A", "to": "D", "weight": 3 },
+    { "from": "B", "to": "C", "weight": 2 },
+    { "from": "B", "to": "D", "weight": 4 },
+    { "from": "B", "to": "E", "weight": 5 },
+    { "from": "C", "to": "E", "weight": 4 },
+    { "from": "D", "to": "T", "weight": 9 },
+    { "from": "E", "to": "D", "weight": 1 },
+    { "from": "E", "to": "T", "weight": 6 }
+  ]
+}

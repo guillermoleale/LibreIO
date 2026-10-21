@@ -1,0 +1,20 @@
+{
+  "type": "network",
+  "title": "Camino mínimo en red dirigida (Hillier, Seervada Park)",
+  "directed": true,
+  "nodes": ["O", "A", "B", "C", "D", "E", "T"],
+  "arcs": [
+    { "from": "O", "to": "A", "weight": 2 },
+    { "from": "O", "to": "B", "weight": 5 },
+    { "from": "O", "to": "C", "weight": 4 },
+    { "from": "A", "to": "B", "weight": 2 },
+    { "from": "A", "to": "D", "weight": 7 },
+    { "from": "B", "to": "C", "weight": 1 },
+    { "from": "B", "to": "D", "weight": 4 },
+    { "from": "B", "to": "E", "weight": 3 },
+    { "from": "C", "to": "E", "weight": 4 },
+    { "from": "D", "to": "E", "weight": 1 },
+    { "from": "D", "to": "T", "weight": 5 },
+    { "from": "E", "to": "T", "weight": 7 }
+  ]
+}

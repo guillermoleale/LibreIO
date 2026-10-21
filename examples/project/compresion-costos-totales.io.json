@@ -1,0 +1,46 @@
+{
+  "type": "project",
+  "title": "Compresión con costos normal y de quiebre totales",
+  "activities": [
+    {
+      "id": "A",
+      "predecessors": [],
+      "duration": 5,
+      "normalCost": 100,
+      "crashDuration": 3,
+      "crashCost": 160
+    },
+    {
+      "id": "B",
+      "predecessors": [],
+      "duration": 4,
+      "normalCost": 80,
+      "crashDuration": 2,
+      "crashCost": 200
+    },
+    {
+      "id": "C",
+      "predecessors": ["A"],
+      "duration": 3,
+      "normalCost": 60,
+      "crashDuration": 2,
+      "crashCost": 100
+    },
+    {
+      "id": "D",
+      "predecessors": ["B"],
+      "duration": 6,
+      "normalCost": 120,
+      "crashDuration": 4,
+      "crashCost": 180
+    },
+    {
+      "id": "E",
+      "predecessors": ["C", "D"],
+      "duration": 2,
+      "normalCost": 40,
+      "crashDuration": 1,
+      "crashCost": 90
+    }
+  ]
+}

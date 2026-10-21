@@ -1,0 +1,13 @@
+{
+  "type": "network",
+  "title": "NET-02 Flujo máximo",
+  "directed": true,
+  "nodes": ["s", "a", "b", "t"],
+  "arcs": [
+    { "from": "s", "to": "a", "weight": 10 },
+    { "from": "s", "to": "b", "weight": 5 },
+    { "from": "a", "to": "b", "weight": 15 },
+    { "from": "a", "to": "t", "weight": 5 },
+    { "from": "b", "to": "t", "weight": 10 }
+  ]
+}

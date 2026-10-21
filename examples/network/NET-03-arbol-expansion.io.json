@@ -1,0 +1,14 @@
+{
+  "type": "network",
+  "title": "NET-03 Árbol de expansión mínima",
+  "directed": false,
+  "nodes": ["A", "B", "C", "D"],
+  "arcs": [
+    { "from": "A", "to": "B", "weight": 1 },
+    { "from": "B", "to": "C", "weight": 2 },
+    { "from": "C", "to": "D", "weight": 3 },
+    { "from": "A", "to": "D", "weight": 4 },
+    { "from": "A", "to": "C", "weight": 5 },
+    { "from": "B", "to": "D", "weight": 6 }
+  ]
+}
