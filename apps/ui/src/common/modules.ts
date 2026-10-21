@@ -30,6 +30,6 @@ export const modules: readonly ModuleEntry[] = [
   { key: "queueing", label: "module.queueing", available: true },
   { key: "inventory", label: "module.inventory", available: true },
   { key: "decision", label: "module.decision", available: true },
-  { key: "dp", label: "module.dp", available: false },
-  { key: "markov", label: "module.markov", available: false },
+  { key: "dp", label: "module.dp", available: true },
+  { key: "markov", label: "module.markov", available: true },
 ];
