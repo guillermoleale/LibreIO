@@ -1,6 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { useMemo } from "react";
-import { reportClassic, reportCombined } from "@libreio/core";
+import {
+  reportClassic,
+  reportClassicInteger,
+  reportCombined,
+  reportCombinedInteger,
+} from "@libreio/core";
 import { t } from "../i18n";
 import { downloadText } from "../common/download";
 import {
@@ -26,27 +31,35 @@ export function SolutionTab({
   format,
   onFormatChange,
 }: SolutionTabProps) {
-  const setFormat = onFormatChange;
   const number = makeFormatter(numberFormat);
-  const report = useMemo(
-    () =>
-      format === "classic"
-        ? reportClassic(solved.model, solved.result)
-        : reportCombined(solved.model, solved.result, {
+  const report = useMemo(() => {
+    if (solved.integer) {
+      return format === "classic"
+        ? reportClassicInteger(solved.model, solved.integer)
+        : reportCombinedInteger(solved.model, solved.integer, {
             numberFormat,
             decimals: DECIMALS,
-          }),
-    [format, solved, numberFormat],
-  );
+          });
+    }
+    return format === "classic"
+      ? reportClassic(solved.model, solved.result)
+      : reportCombined(solved.model, solved.result, {
+          numberFormat,
+          decimals: DECIMALS,
+        });
+  }, [format, solved, numberFormat]);
+  const messages = solved.integer
+    ? [...solved.integer.messages, ...solved.result.messages]
+    : solved.result.messages;
   const baseName = (solved.model.title ?? "solucion").replace(/[^\w-]+/g, "_");
   return (
     <div className="solution-tab">
-      <StatusBanner result={solved.result} number={number} />
-      {solved.result.messages.length > 0 && (
+      <StatusBanner solved={solved} number={number} />
+      {messages.length > 0 && (
         <details className="messages" open>
           <summary>{t("solution.messages")}</summary>
           <ul data-testid="messages">
-            {solved.result.messages.map((m, i) => (
+            {messages.map((m, i) => (
               <li key={i}>{m}</li>
             ))}
           </ul>
@@ -61,7 +74,7 @@ export function SolutionTab({
           <button
             type="button"
             className={format === "combined" ? "active" : ""}
-            onClick={() => setFormat("combined")}
+            onClick={() => onFormatChange("combined")}
             data-testid="report-combined"
           >
             {t("solution.combined")}
@@ -69,7 +82,7 @@ export function SolutionTab({
           <button
             type="button"
             className={format === "classic" ? "active" : ""}
-            onClick={() => setFormat("classic")}
+            onClick={() => onFormatChange("classic")}
             data-testid="report-classic"
           >
             {t("solution.classic")}

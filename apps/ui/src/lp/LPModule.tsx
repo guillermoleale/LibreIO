@@ -1,11 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Módulo de programación lineal: editor a la izquierda, resultados a la derecha.
+// Módulo de programación lineal y entera: editor de texto o tabla a la izquierda, resultados a la derecha.
 import { useCallback, useMemo, useState } from "react";
 import {
   ParseError,
+  branchAndBound,
+  formatLP,
   graphicalAnalysis,
   parseLP,
   solveLP,
+  type BBResult,
   type EnteringRule,
   type GraphicalAnalysis,
   type LPModel,
@@ -20,11 +23,21 @@ import { Tabs } from "../common/Tabs";
 import { GraphTab } from "./GraphTab";
 import { ModelEditor } from "./ModelEditor";
 import { ModelTab } from "./ModelTab";
+import { ParametricTab } from "./ParametricTab";
 import { SensitivityTab } from "./SensitivityTab";
 import { SolutionTab, type ReportFormat } from "./SolutionTab";
 import { TableauTab } from "./TableauTab";
+import { TabularEditor } from "./TabularEditor";
+import { TreeTab } from "./TreeTab";
 
-type TabKey = "model" | "solution" | "tableau" | "graph" | "sensitivity";
+type TabKey =
+  | "model"
+  | "solution"
+  | "tableau"
+  | "graph"
+  | "sensitivity"
+  | "parametric"
+  | "tree";
 
 interface ParseOutcome {
   readonly model: LPModel | null;
@@ -34,8 +47,10 @@ interface ParseOutcome {
 
 export interface Solved {
   readonly model: LPModel;
+  /** Resultado del simplex: el problema continuo o la relajación lineal si hay variables enteras. */
   readonly result: LPResult;
   readonly graphical: GraphicalAnalysis;
+  readonly integer: BBResult | null;
 }
 
 function tryParse(text: string): ParseOutcome {
@@ -52,31 +67,58 @@ function tryParse(text: string): ParseOutcome {
   }
 }
 
+function hasIntegers(model: LPModel | null): boolean {
+  return model !== null && model.variables.some((v) => v.kind !== "continuous");
+}
+
 const defaultText =
   lpExamples.find((e) => e.id.startsWith("LP-01"))?.text ?? "";
 
 export function LPModule() {
   const [text, setText] = useState(defaultText);
   const [fileName, setFileName] = useState("LP-01-optimo-unico.lp");
+  const [view, setView] = useState<"text" | "table">("text");
   const [method, setMethod] = useState<SimplexMethod>("twoPhase");
   const [rule, setRule] = useState<EnteringRule>("dantzig");
+  const [branchVariable, setBranchVariable] = useState("auto");
   const [numberFormat, setNumberFormat] = useState<NumberFormat>("fraction");
   const [reportFormat, setReportFormat] = useState<ReportFormat>("combined");
   const [solved, setSolved] = useState<Solved | null>(null);
   const [solveCount, setSolveCount] = useState(0);
   const [tab, setTab] = useState<TabKey>("solution");
   const [notice, setNotice] = useState<string | null>(null);
+  const [lastValid, setLastValid] = useState<LPModel | null>(null);
 
   const live = useMemo(() => tryParse(text), [text]);
+  if (live.model && live.model !== lastValid) {
+    // Último modelo válido para la vista tabular mientras el texto tiene errores.
+    setLastValid(live.model);
+  }
 
   const solveModel = useCallback(
     (model: LPModel) => {
       const result = solveLP(model, { method, rule });
       const graphical = graphicalAnalysis(model);
-      setSolved({ model, result, graphical });
+      let integer: BBResult | null = null;
+      if (hasIntegers(model)) {
+        const preferred = model.variables.findIndex(
+          (v) => v.name === branchVariable,
+        );
+        integer = branchAndBound(model, {
+          method,
+          rule,
+          ...(preferred >= 0
+            ? {
+                chooseBranch: (candidates: number[]) =>
+                  candidates.includes(preferred) ? preferred : candidates[0]!,
+              }
+            : {}),
+        });
+      }
+      setSolved({ model, result, graphical, integer });
       setSolveCount((n) => n + 1);
     },
-    [method, rule],
+    [method, rule, branchVariable],
   );
 
   const solve = useCallback(() => {
@@ -128,14 +170,38 @@ export function LPModule() {
     }
   };
 
-  const graphDisabled = solved === null || !solved.graphical.applicable;
-  const sensitivityDisabled =
-    solved === null || solved.result.status !== "optimal";
-  const activeTab: TabKey =
-    (tab === "graph" && graphDisabled) ||
-    (tab === "sensitivity" && sensitivityDisabled)
-      ? "solution"
-      : tab;
+  const onTableChange = (model: LPModel) => {
+    const title = lastValid?.title ?? null;
+    setText(formatLP({ ...model, title }));
+    setSolved(null);
+  };
+
+  const integerModel = hasIntegers(live.model ?? lastValid);
+  const isInteger = solved !== null && solved.integer !== null;
+  const optimal = solved !== null && solved.result.status === "optimal";
+  const disabled: Record<TabKey, boolean> = {
+    model: false,
+    solution: false,
+    tableau: false,
+    graph: solved === null || !solved.graphical.applicable,
+    sensitivity: !optimal || isInteger,
+    parametric: !optimal || isInteger,
+    tree: !isInteger,
+  };
+  const activeTab: TabKey = disabled[tab] ? "solution" : tab;
+  const items = (
+    [
+      { key: "model", label: t("tab.model") },
+      { key: "solution", label: t("tab.solution") },
+      { key: "tableau", label: t("tab.tableau") },
+      { key: "graph", label: t("tab.graph") },
+      { key: "sensitivity", label: t("tab.sensitivity") },
+      { key: "parametric", label: t("tab.parametric") },
+      { key: "tree", label: t("tab.tree") },
+    ] as const
+  )
+    .filter((item) => item.key !== "tree" || isInteger)
+    .map((item) => ({ ...item, disabled: disabled[item.key] }));
 
   return (
     <div className="workspace" data-testid="lp-module">
@@ -143,6 +209,28 @@ export function LPModule() {
         <header className="panel-header">
           <h2 id="model-title">{t("editor.title")}</h2>
           <div className="toolbar">
+            <div
+              className="segmented"
+              role="group"
+              aria-label={t("editor.title")}
+            >
+              <button
+                type="button"
+                className={view === "text" ? "active" : ""}
+                onClick={() => setView("text")}
+                data-testid="view-text"
+              >
+                {t("view.text")}
+              </button>
+              <button
+                type="button"
+                className={view === "table" ? "active" : ""}
+                onClick={() => setView("table")}
+                data-testid="view-table"
+              >
+                {t("view.table")}
+              </button>
+            </div>
             <label className="select-label">
               <span className="visually-hidden">{t("editor.examples")}</span>
               <select
@@ -188,13 +276,20 @@ export function LPModule() {
             </button>
           </div>
         </header>
-        <ModelEditor
-          value={text}
-          onChange={setText}
-          onSolve={solve}
-          errorLine={live.errorLine}
-          errorMessage={live.errorMessage}
-        />
+        {view === "text" ? (
+          <ModelEditor
+            value={text}
+            onChange={setText}
+            onSolve={solve}
+            errorLine={live.errorLine}
+            errorMessage={live.errorMessage}
+          />
+        ) : (
+          <TabularEditor
+            model={live.model ?? lastValid}
+            onChange={onTableChange}
+          />
+        )}
         <div className="options" data-testid="options">
           <label>
             {t("options.method")}
@@ -229,6 +324,25 @@ export function LPModule() {
               <option value="decimal">{t("options.decimal")}</option>
             </select>
           </label>
+          {integerModel && (
+            <label>
+              {t("options.branch")}
+              <select
+                value={branchVariable}
+                onChange={(e) => setBranchVariable(e.target.value)}
+                data-testid="branch-select"
+              >
+                <option value="auto">{t("options.branchAuto")}</option>
+                {(live.model ?? lastValid)!.variables
+                  .filter((v) => v.kind !== "continuous")
+                  .map((v) => (
+                    <option key={v.name} value={v.name}>
+                      {v.name}
+                    </option>
+                  ))}
+              </select>
+            </label>
+          )}
         </div>
         {notice !== null && (
           <p className="notice" role="status">
@@ -248,17 +362,7 @@ export function LPModule() {
           </p>
         ) : (
           <Tabs<TabKey>
-            items={[
-              { key: "model", label: t("tab.model") },
-              { key: "solution", label: t("tab.solution") },
-              { key: "tableau", label: t("tab.tableau") },
-              { key: "graph", label: t("tab.graph"), disabled: graphDisabled },
-              {
-                key: "sensitivity",
-                label: t("tab.sensitivity"),
-                disabled: sensitivityDisabled,
-              },
-            ]}
+            items={items}
             active={activeTab}
             onChange={setTab}
             idPrefix="lp"
@@ -291,6 +395,21 @@ export function LPModule() {
             )}
             {activeTab === "sensitivity" && (
               <SensitivityTab solved={solved} numberFormat={numberFormat} />
+            )}
+            {activeTab === "parametric" && (
+              <ParametricTab
+                key={solveCount}
+                solved={solved}
+                numberFormat={numberFormat}
+              />
+            )}
+            {activeTab === "tree" && solved.integer && (
+              <TreeTab
+                key={solveCount}
+                integer={solved.integer}
+                isMin={solved.model.sense === "min"}
+                numberFormat={numberFormat}
+              />
             )}
           </Tabs>
         )}

@@ -30,3 +30,33 @@ export const lpExamples: readonly Example[] = Object.entries(files)
     return { id, name: titleOf(text, id), text };
   })
   .sort((a, b) => a.id.localeCompare(b.id, "es"));
+
+const transportFiles = import.meta.glob(
+  "../../../../examples/transport/*.io.json",
+  {
+    query: "?raw",
+    import: "default",
+    eager: true,
+  },
+) as Record<string, string>;
+
+function jsonTitle(text: string, fallback: string): string {
+  try {
+    const parsed = JSON.parse(text) as { title?: unknown };
+    return typeof parsed.title === "string" && parsed.title !== ""
+      ? parsed.title
+      : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+export const transportExamples: readonly Example[] = Object.entries(
+  transportFiles,
+)
+  .map(([path, text]) => {
+    const file = path.split("/").pop() ?? path;
+    const id = file.replace(/\.io\.json$/, "");
+    return { id, name: jsonTitle(text, id), text };
+  })
+  .sort((a, b) => a.id.localeCompare(b.id, "es"));

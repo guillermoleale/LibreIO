@@ -24,7 +24,7 @@ export interface ModuleEntry {
 export const modules: readonly ModuleEntry[] = [
   { key: "lp", label: "module.lp", available: true },
   { key: "ilp", label: "module.ilp", available: false },
-  { key: "transport", label: "module.transport", available: false },
+  { key: "transport", label: "module.transport", available: true },
   { key: "network", label: "module.network", available: false },
   { key: "pert", label: "module.pert", available: false },
   { key: "queueing", label: "module.queueing", available: false },

@@ -6,6 +6,7 @@ import { Sidebar } from "./common/Sidebar";
 import { useTheme } from "./common/theme";
 import { t } from "./i18n";
 import { LPModule } from "./lp/LPModule";
+import { TransportModule } from "./transport/TransportModule";
 
 export function App() {
   const [view, setView] = useState<ViewKey>("lp");
@@ -23,7 +24,13 @@ export function App() {
         onToggleTheme={toggleTheme}
       />
       <main id="main" className="main">
-        {view === "about" ? <About /> : <LPModule />}
+        {view === "about" ? (
+          <About />
+        ) : view === "transport" ? (
+          <TransportModule />
+        ) : (
+          <LPModule />
+        )}
       </main>
     </div>
   );

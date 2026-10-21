@@ -797,3 +797,233 @@ select {
   border: 1px solid var(--warn);
   border-radius: var(--radius);
 }
+
+/* Editor tabular y editores de matriz */
+.editor-grid input.cell,
+.editor-grid select {
+  width: 4.5em;
+  padding: 3px 5px;
+  font-family: var(--mono);
+  font-size: 13px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface);
+}
+
+.editor-grid input.cell.name {
+  width: 6.5em;
+  font-family: var(--sans);
+}
+
+.editor-grid select {
+  width: auto;
+  min-width: 4.5em;
+  font-family: var(--sans);
+}
+
+.editor-grid input.cell.invalid,
+.editor-grid select.invalid {
+  border-color: var(--error);
+  background: var(--error-soft);
+}
+
+.editor-grid tr.invalid-row th {
+  color: var(--error);
+}
+
+.editor-grid th,
+.editor-grid td {
+  padding: 3px 4px;
+}
+
+button.icon {
+  padding: 0 6px;
+  margin-left: 4px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+button.icon:hover {
+  color: var(--error);
+}
+
+.editor-error.inline {
+  padding: 4px 8px;
+  border: none;
+  background: transparent;
+}
+
+.table-editor,
+.editor-area {
+  padding: 10px 12px;
+  overflow: auto;
+  flex: 1;
+}
+
+input.short {
+  width: 6em;
+  padding: 4px 6px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface);
+  font-family: var(--mono);
+}
+
+/* Gráfico de Z en el paramétrico */
+.chart {
+  width: 100%;
+  max-width: 720px;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+/* Árbol de ramificación */
+.tree-scroll {
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  margin-bottom: 10px;
+}
+
+.tree-node {
+  cursor: pointer;
+}
+
+.tree-node rect {
+  fill: var(--surface-2);
+  stroke: var(--border);
+  stroke-width: 1.5;
+}
+
+.tree-node text {
+  fill: var(--text);
+}
+
+.tree-node.node-best rect {
+  fill: color-mix(in srgb, var(--ok) 25%, var(--surface));
+  stroke: var(--ok);
+}
+
+.tree-node.node-integer rect {
+  fill: color-mix(in srgb, var(--ok) 10%, var(--surface));
+}
+
+.tree-node.node-infeasible rect {
+  fill: color-mix(in srgb, var(--error) 12%, var(--surface));
+  stroke: var(--error);
+}
+
+.tree-node.node-bound rect {
+  fill: color-mix(in srgb, var(--warn) 12%, var(--surface));
+  stroke: var(--warn);
+}
+
+.tree-node.selected rect {
+  stroke: var(--accent);
+  stroke-width: 3;
+}
+
+.node-details {
+  margin: 10px 0;
+}
+
+/* Transporte */
+.transport-tableau td.tcell {
+  position: relative;
+  min-width: 64px;
+  height: 46px;
+  vertical-align: top;
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
+.transport-tableau .tcost {
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.transport-tableau .talloc {
+  position: absolute;
+  bottom: 4px;
+  left: 6px;
+  font-weight: 700;
+}
+
+.transport-tableau .treduced {
+  position: absolute;
+  bottom: 4px;
+  left: 6px;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.transport-tableau .tsign {
+  position: absolute;
+  top: 2px;
+  left: 4px;
+  font-weight: 700;
+}
+
+.transport-tableau td.basic {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+.transport-tableau td.cycle-plus {
+  outline: 2px solid var(--ok);
+  outline-offset: -2px;
+}
+
+.transport-tableau td.cycle-minus {
+  outline: 2px solid var(--warn);
+  outline-offset: -2px;
+}
+
+.transport-tableau td.entering {
+  background: color-mix(in srgb, var(--ok) 22%, transparent);
+}
+
+.transport-tableau td.leaving {
+  background: color-mix(in srgb, var(--warn) 22%, transparent);
+}
+
+.transport-tableau td.total,
+.transport-tableau th .potential {
+  color: var(--muted);
+  font-weight: 400;
+  font-size: 12px;
+}
+
+.step-list {
+  font-size: 13px;
+  padding-left: 20px;
+}
+
+.messages-list {
+  margin: 0 0 8px;
+  padding-left: 20px;
+  font-size: 14px;
+}
+
+.hungarian th.covered,
+.hungarian tr.covered th,
+.hungarian tr.covered td,
+.hungarian td.covered {
+  background: color-mix(in srgb, var(--warn) 18%, transparent);
+}
+
+.hungarian td.zero {
+  font-weight: 700;
+}
+
+.hungarian td.assigned {
+  outline: 2px solid var(--ok);
+  outline-offset: -2px;
+}

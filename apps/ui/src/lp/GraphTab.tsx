@@ -297,6 +297,15 @@ export function GraphTab({
   const dirNorm = dir ? Math.hypot(dir[0]!, dir[1]!) || 1 : 1;
   const arrowLen = (rect.xMax - rect.xMin) * 0.25;
   const fmtPoint = (x: Fraction, y: Fraction) => `(${number(x)}, ${number(y)})`;
+  const integerSolution =
+    overrides.size === 0 ? (solved.integer?.solution ?? null) : null;
+  const integerOptimum = integerSolution
+    ? {
+        x: integerSolution.variables[0]!.value,
+        y: integerSolution.variables[1]!.value,
+        z: integerSolution.objective,
+      }
+    : null;
 
   return (
     <div className="graph-tab" data-testid="graph-tab">
@@ -506,6 +515,41 @@ export function GraphTab({
               style={{ color: "var(--error)" }}
               data-testid="unbounded-arrow"
             />
+          )}
+          {/* Grilla de puntos enteros */}
+          {g.integerPoints.map((p, i) => (
+            <circle
+              key={`ip-${i}`}
+              cx={sx(p.x.toNumber())}
+              cy={sy(p.y.toNumber())}
+              r={2.5}
+              fill="var(--text)"
+              fillOpacity={0.6}
+              data-testid="integer-point"
+            />
+          ))}
+          {integerOptimum && (
+            <g data-testid="integer-optimum">
+              <rect
+                x={sx(integerOptimum.x.toNumber()) - 7}
+                y={sy(integerOptimum.y.toNumber()) - 7}
+                width={14}
+                height={14}
+                fill="var(--warn)"
+                stroke="var(--text)"
+                strokeWidth={1.5}
+              />
+              <text
+                x={sx(integerOptimum.x.toNumber()) + 10}
+                y={sy(integerOptimum.y.toNumber()) + 18}
+                fontSize={14}
+                fill="var(--text)"
+              >
+                {t("status.integerOptimal")}{" "}
+                {fmtPoint(integerOptimum.x, integerOptimum.y)} Z ={" "}
+                {number(integerOptimum.z)}
+              </text>
+            </g>
           )}
           {/* Vértices */}
           {g.vertices.map((v, i) => {
