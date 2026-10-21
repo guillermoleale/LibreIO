@@ -1184,3 +1184,109 @@ tr.critical-row td {
   color: var(--error);
   font-weight: 600;
 }
+
+/* Formularios de colas e inventarios */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 8px 16px;
+  align-items: end;
+}
+
+.form-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.form-grid label input,
+.form-grid label select {
+  width: 100%;
+  color: var(--text);
+}
+
+.form-grid h3 {
+  grid-column: 1 / -1;
+  margin: 8px 0 0;
+  font-size: 15px;
+}
+
+.form-grid .switch {
+  flex-direction: row;
+  align-items: center;
+  color: var(--text);
+}
+
+.form-grid .switch input {
+  width: auto;
+}
+
+.form-grid .table-scroll {
+  grid-column: 1 / -1;
+}
+
+input.short.invalid {
+  border-color: var(--error);
+  background: var(--error-soft);
+}
+
+/* Árbol de decisión */
+svg.decision-tree .tree-decision rect {
+  fill: var(--surface-2);
+  stroke: var(--text);
+  stroke-width: 1.5;
+}
+
+svg.decision-tree .tree-chance circle {
+  fill: var(--surface-2);
+  stroke: var(--text);
+  stroke-width: 1.5;
+}
+
+svg.decision-tree .tree-terminal text {
+  fill: var(--muted);
+}
+
+svg.decision-tree .tree-branch {
+  stroke: var(--muted);
+  stroke-width: 1.6;
+  fill: none;
+}
+
+svg.decision-tree .tree-branch.chosen {
+  stroke: var(--ok);
+  stroke-width: 3;
+}
+
+svg.decision-tree .tree-branch.rejected {
+  stroke: var(--muted);
+  stroke-dasharray: 2 4;
+}
+
+svg.decision-tree text {
+  fill: var(--text);
+}
+
+/* Resolución gráfica del juego */
+svg.game-chart .game-line {
+  stroke: var(--muted);
+  stroke-width: 1.6;
+  fill: none;
+}
+
+svg.game-chart .game-envelope {
+  stroke: var(--accent);
+  stroke-width: 3;
+  fill: none;
+}
+
+svg.game-chart .game-optimum {
+  fill: var(--warn);
+  stroke: var(--text);
+}
+
+svg.game-chart text {
+  fill: var(--text);
+}

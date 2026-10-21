@@ -91,3 +91,48 @@ export const projectExamples: readonly Example[] = jsonExamples(
   }) as Record<string, string>,
   /\.io\.json$/,
 );
+
+export const queueingExamples: readonly Example[] = jsonExamples(
+  import.meta.glob("../../../../examples/queueing/*.io.json", {
+    query: "?raw",
+    import: "default",
+    eager: true,
+  }) as Record<string, string>,
+  /\.io\.json$/,
+);
+
+export const inventoryExamples: readonly Example[] = jsonExamples(
+  import.meta.glob("../../../../examples/inventory/*.io.json", {
+    query: "?raw",
+    import: "default",
+    eager: true,
+  }) as Record<string, string>,
+  /\.io\.json$/,
+);
+
+export const decisionExamples: readonly Example[] = jsonExamples(
+  import.meta.glob("../../../../examples/decision/*.io.json", {
+    query: "?raw",
+    import: "default",
+    eager: true,
+  }) as Record<string, string>,
+  /\.io\.json$/,
+);
+
+export const dpExamples: readonly Example[] = jsonExamples(
+  import.meta.glob("../../../../examples/dp/*.io.json", {
+    query: "?raw",
+    import: "default",
+    eager: true,
+  }) as Record<string, string>,
+  /\.io\.json$/,
+);
+
+export const markovExamples: readonly Example[] = jsonExamples(
+  import.meta.glob("../../../../examples/markov/*.io.json", {
+    query: "?raw",
+    import: "default",
+    eager: true,
+  }) as Record<string, string>,
+  /\.io\.json$/,
+);

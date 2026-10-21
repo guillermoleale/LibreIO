@@ -27,9 +27,9 @@ export const modules: readonly ModuleEntry[] = [
   { key: "transport", label: "module.transport", available: true },
   { key: "network", label: "module.network", available: true },
   { key: "pert", label: "module.pert", available: true },
-  { key: "queueing", label: "module.queueing", available: false },
-  { key: "inventory", label: "module.inventory", available: false },
-  { key: "decision", label: "module.decision", available: false },
+  { key: "queueing", label: "module.queueing", available: true },
+  { key: "inventory", label: "module.inventory", available: true },
+  { key: "decision", label: "module.decision", available: true },
   { key: "dp", label: "module.dp", available: false },
   { key: "markov", label: "module.markov", available: false },
 ];

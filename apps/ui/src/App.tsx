@@ -6,7 +6,10 @@ import { Sidebar } from "./common/Sidebar";
 import { useTheme } from "./common/theme";
 import { t } from "./i18n";
 import { LPModule } from "./lp/LPModule";
+import { DecisionModule } from "./decision/DecisionModule";
+import { InventoryModule } from "./inventory/InventoryModule";
 import { NetworkModule } from "./network/NetworkModule";
+import { QueueModule } from "./queueing/QueueModule";
 import { PertModule } from "./pert/PertModule";
 import { TransportModule } from "./transport/TransportModule";
 
@@ -34,6 +37,12 @@ export function App() {
           <NetworkModule />
         ) : view === "pert" ? (
           <PertModule />
+        ) : view === "queueing" ? (
+          <QueueModule />
+        ) : view === "inventory" ? (
+          <InventoryModule />
+        ) : view === "decision" ? (
+          <DecisionModule />
         ) : (
           <LPModule />
         )}
