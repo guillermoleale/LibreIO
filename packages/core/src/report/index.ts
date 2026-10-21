@@ -47,3 +47,5 @@ export {
   reportGame,
   reportPayoff,
 } from "./decision";
+export { reportKnapsack, reportStagecoach } from "./dp";
+export { reportMarkov } from "./markov";

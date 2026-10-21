@@ -1,0 +1,11 @@
+{
+  "type": "markov",
+  "title": "Cadena periódica de dos estados",
+  "states": ["A", "B"],
+  "matrix": [
+    [0, 1],
+    [1, 0]
+  ],
+  "initial": [1, 0],
+  "steps": 4
+}

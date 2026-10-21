@@ -1,0 +1,11 @@
+{
+  "type": "knapsack",
+  "title": "Asignación de presupuesto (mochila)",
+  "capacity": 8,
+  "items": [
+    { "name": "Proyecto 1", "weight": 2, "value": 10 },
+    { "name": "Proyecto 2", "weight": 3, "value": 14 },
+    { "name": "Proyecto 3", "weight": 4, "value": 16 },
+    { "name": "Proyecto 4", "weight": 5, "value": 22 }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "type": "markov",
+  "title": "Clima: soleado, nublado y lluvioso",
+  "states": ["Soleado", "Nublado", "Lluvioso"],
+  "matrix": [
+    ["7/10", "1/5", "1/10"],
+    ["3/10", "2/5", "3/10"],
+    ["1/5", "3/10", "1/2"]
+  ],
+  "initial": [1, 0, 0],
+  "steps": 10
+}

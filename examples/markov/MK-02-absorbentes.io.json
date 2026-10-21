@@ -1,0 +1,12 @@
+{
+  "type": "markov",
+  "title": "MK-02 Estados absorbentes",
+  "states": ["1", "2", "3"],
+  "matrix": [
+    ["1/2", "3/10", "1/5"],
+    [0, 1, 0],
+    [0, 0, 1]
+  ],
+  "initial": [1, 0, 0],
+  "steps": 5
+}

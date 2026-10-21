@@ -1,0 +1,15 @@
+{
+  "type": "stagecoach",
+  "title": "Camino de máxima ganancia por etapas",
+  "sense": "max",
+  "arcs": [
+    { "from": "S", "to": "A", "cost": 5 },
+    { "from": "S", "to": "B", "cost": 3 },
+    { "from": "A", "to": "C", "cost": 2 },
+    { "from": "A", "to": "D", "cost": 6 },
+    { "from": "B", "to": "C", "cost": 4 },
+    { "from": "B", "to": "D", "cost": 1 },
+    { "from": "C", "to": "T", "cost": 3 },
+    { "from": "D", "to": "T", "cost": 2 }
+  ]
+}

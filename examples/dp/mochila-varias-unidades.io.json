@@ -1,0 +1,10 @@
+{
+  "type": "knapsack",
+  "title": "Mochila con varias unidades por objeto",
+  "capacity": 10,
+  "items": [
+    { "name": "A", "weight": 3, "value": 4, "maxUnits": 3 },
+    { "name": "B", "weight": 4, "value": 5, "maxUnits": 2 },
+    { "name": "C", "weight": 5, "value": 7, "maxUnits": 1 }
+  ]
+}

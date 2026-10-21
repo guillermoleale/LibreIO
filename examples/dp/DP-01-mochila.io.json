@@ -1,0 +1,11 @@
+{
+  "type": "knapsack",
+  "title": "DP-01 Mochila",
+  "capacity": 5,
+  "items": [
+    { "name": "1", "weight": 2, "value": 3 },
+    { "name": "2", "weight": 3, "value": 4 },
+    { "name": "3", "weight": 4, "value": 5 },
+    { "name": "4", "weight": 5, "value": 6 }
+  ]
+}

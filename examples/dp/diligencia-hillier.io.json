@@ -1,0 +1,28 @@
+{
+  "type": "stagecoach",
+  "title": "Diligencia (Hillier y Lieberman)",
+  "sense": "min",
+  "stages": [["A"], ["B", "C", "D"], ["E", "F", "G"], ["H", "I"], ["J"]],
+  "arcs": [
+    { "from": "A", "to": "B", "cost": 2 },
+    { "from": "A", "to": "C", "cost": 4 },
+    { "from": "A", "to": "D", "cost": 3 },
+    { "from": "B", "to": "E", "cost": 7 },
+    { "from": "B", "to": "F", "cost": 4 },
+    { "from": "B", "to": "G", "cost": 6 },
+    { "from": "C", "to": "E", "cost": 3 },
+    { "from": "C", "to": "F", "cost": 2 },
+    { "from": "C", "to": "G", "cost": 4 },
+    { "from": "D", "to": "E", "cost": 4 },
+    { "from": "D", "to": "F", "cost": 1 },
+    { "from": "D", "to": "G", "cost": 5 },
+    { "from": "E", "to": "H", "cost": 1 },
+    { "from": "E", "to": "I", "cost": 4 },
+    { "from": "F", "to": "H", "cost": 6 },
+    { "from": "F", "to": "I", "cost": 3 },
+    { "from": "G", "to": "H", "cost": 3 },
+    { "from": "G", "to": "I", "cost": 3 },
+    { "from": "H", "to": "J", "cost": 3 },
+    { "from": "I", "to": "J", "cost": 4 }
+  ]
+}

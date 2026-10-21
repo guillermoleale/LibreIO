@@ -10,3 +10,5 @@ export * from "./pert";
 export * from "./queueing";
 export * from "./inventory";
 export * from "./decision";
+export * from "./dp";
+export * from "./markov";
